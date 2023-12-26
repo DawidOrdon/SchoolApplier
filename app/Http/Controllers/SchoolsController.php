@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
 use App\Models\schools;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -136,7 +137,7 @@ class SchoolsController extends Controller
             if( $user->hasPermissionTo('edit_school_data') ) {
                 $school = schools::all()->where('user_id','=',$user->id)->where('id','=',$school_id);
                 if(count($school)){
-                    return view('schools.admin',['schools'=>Schools::all()->where('user_id','=',$user->id)]);
+                    return view('schools.admin',['schools'=>Schools::all()->where('user_id','=',$user->id),'classes'=>Classes::all()->where('school_id','=',$school_id)]);
                 }
                 else{
                     return redirect('/');

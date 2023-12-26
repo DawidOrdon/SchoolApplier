@@ -20,7 +20,9 @@
     </div>
     <div class="w-full p-10 flex items-center justify-center">
         <div class="w-1/6 flex items-center justify-center" id="new_class_btn">
-            Dodaj nową klase
+            @foreach($classes as $class)
+                {{$class->name}}
+            @endforeach
         </div>
     </div>
     <div class="items-center justify-center w-full" id="new_class_form">
