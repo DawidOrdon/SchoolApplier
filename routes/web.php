@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('schools');
 });
 Route::get('/test', function () {
     return view('test');
@@ -29,3 +29,11 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::group(['middleware' => ['role:admin|school']], function () {
+    Route::get('/schools/{school_id}/admin',[\App\Http\Controllers\SchoolsController::class,'admin_page']);
+    Route::get('/school/edit',[\App\Http\Controllers\SchoolsController::class,'edit']);
+});
+Route::resource('/schools',\App\Http\Controllers\SchoolsController::class);
+Route::get('/{school_id}',[\App\Http\Controllers\SchoolsController::class,'show']);
+Route::resource('{school_id}/classes',\App\Http\Controllers\ClassesController::class);

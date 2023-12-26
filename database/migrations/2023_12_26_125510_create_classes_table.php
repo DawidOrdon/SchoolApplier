@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schools', function (Blueprint $table) {
+        Schema::create('classes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users');
-            $table->string('email')->unique();
+            $table->foreignId('school_id')->references('id')->on('schools');
             $table->string('name');
             $table->string('desc');
-            $table->string('page');
-            $table->string('phone');
-            $table->string('address');
-            $table->string('city');
-            $table->string('county');
-            $table->string('voivodeship');
-            $table->string('img');
+            $table->integer('slots');
+            $table->foreignId('school_type')->references('id')->on('schools_types');
+            $table->foreignId('subject1')->references('id')->on('subjects');
+            $table->foreignId('subject2')->references('id')->on('subjects');
             $table->timestamps();
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schools');
+        Schema::dropIfExists('classes');
     }
 };

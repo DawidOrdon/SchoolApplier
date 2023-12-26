@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
 
         Role::create(['name' => 'user']);
         Role::create(['name' => 'school'])->givePermissionTo('edit_school_data');
-        Role::create(['name' => 'admin'])->getAllPermissions();
+        Role::create(['name' => 'admin'])->givePermissionTo(['edit_school_data','add_permission','add_school']);
 
     }
 }
