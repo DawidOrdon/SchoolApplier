@@ -20,8 +20,11 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
+            $table->string('firstname')->nullable();
             $table->string('lastname')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('zipcode')->nullable();
+            $table->string('post')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('county')->nullable();

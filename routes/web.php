@@ -28,6 +28,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+    Route::get('/user',[\App\Http\Controllers\UserController::class,'index']);
+    Route::get('/user/edit',[\App\Http\Controllers\UserController::class,'edit']);
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {
