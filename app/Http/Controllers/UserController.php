@@ -10,14 +10,30 @@ class UserController extends Controller
 {
     public function index()
     {
-        return view('users.index');
+        return view('users.index',[
+            'user'=>Auth::user(),
+            'second_parents'=>
+        ]);
     }
     public function edit()
     {
-        return view('users.edit',['user'=>User::all()->where('id','=',Auth::user()->id)]);
+        return view('users.edit',['user'=>Auth::user()]);
     }
-    public function store()
+    public function update(Request $request)
     {
-
+        $request->validate([]);
+        $user=User::find(Auth::user()->id);
+        $user->first_name=$request['first_name'];
+        $user->last_name=$request['last_name'];
+        $user->phone_number=$request['phone'];
+        $user->zipcode=$request['zipcode'];
+        $user->post=$request['post'];
+        $user->address=$request['address'];
+        $user->city=$request['city'];
+        $user->commune=$request['commune'];
+        $user->county=$request['county'];
+        $user->voivodeship=$request['voivodeship'];
+        $user->save();
+        return redirect('user');
     }
 }

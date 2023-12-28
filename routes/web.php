@@ -30,6 +30,8 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/user',[\App\Http\Controllers\UserController::class,'index']);
     Route::get('/user/edit',[\App\Http\Controllers\UserController::class,'edit']);
+    Route::post('/user/store',[\App\Http\Controllers\UserController::class,'store']);
+    Route::resource('/user/second_parent',\App\Http\Controllers\SecondParentsController::class);
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {
