@@ -72,17 +72,52 @@ class SecondParentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SecondParents $secondParents)
+    public function edit(int $parent_id)
     {
-        //
+        $s_parent=SecondParents::find($parent_id);
+        if(isset($s_parent->user_id)){
+            if($s_parent->user_id==Auth::user()->id){
+                return view('second_parents.edit',['parent'=>SecondParents::find($parent_id)]);
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SecondParents $secondParents)
+    public function update(Request $request, int $parent_id)
     {
-        //
+        $s_parent=SecondParents::find($parent_id);
+        if(isset($s_parent->user_id)){
+            if($s_parent->user_id==Auth::user()->id){
+                $request->validate([]);
+                $s_parent->first_name=$request['first_name'];
+                $s_parent->email=$request['email'];
+                $s_parent->last_name=$request['last_name'];
+                $s_parent->phone_number=$request['phone'];
+                $s_parent->zipcode=$request['zipcode'];
+                $s_parent->post=$request['post'];
+                $s_parent->address=$request['address'];
+                $s_parent->city=$request['city'];
+                $s_parent->commune=$request['commune'];
+                $s_parent->county=$request['county'];
+                $s_parent->voivodeship=$request['voivodeship'];
+                $s_parent->save();
+                return redirect('user');
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
     }
 
     /**

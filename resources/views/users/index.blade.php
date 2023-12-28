@@ -31,7 +31,10 @@
 </div>
 <div class="flex items-center justify-center w-full">
     Dane Drugiego rodzica
-    <a href="{{route('second_parent.create')}}"><button class="btn">Dodaj 2 rodzica/opiekuna</button></a>
+    <a href="{{route('second_parent.create')}}"><button class="btn">Dodaj 2 rodzica/opiekuna</button></a><br />
+    @foreach($second_parents as $second_parent)
+        <a href="{{route('second_parent.edit',$second_parent->id)}}"><button class="btn">{{$second_parent->first_name}}</button></a><br />
+    @endforeach
 </div>
 <div class="flex items-center justify-center w-full">
     Dane dziecka
