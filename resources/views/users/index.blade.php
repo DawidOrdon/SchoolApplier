@@ -29,15 +29,25 @@
 
     </div>
 </div>
-<div class="flex items-center justify-center w-full">
-    Dane Drugiego rodzica
-    <a href="{{route('second_parent.create')}}"><button class="btn">Dodaj 2 rodzica/opiekuna</button></a><br />
-    @foreach($second_parents as $second_parent)
-        <a href="{{route('second_parent.edit',$second_parent->id)}}"><button class="btn">{{$second_parent->first_name}}</button></a><br />
-    @endforeach
+<div class="grid md:grid-cols-4 place-items-stretch m-10">
+    <div class="flex items-center justify-center w-full col-start-2" style="text-align: center">
+        <div class="w-full">Dane Drugiego rodzica </div>
+        <div class="w-full"><a href="{{route('second_parent.create')}}"><button class="btn">Dodaj 2 rodzica/opiekuna</button></a></div>
+    </div>
+    <div class="flex items-center justify-center w-full col-start-3" style="text-align: center">
+        @foreach($second_parents as $second_parent)
+            <a href="{{route('second_parent.edit',$second_parent->id)}}"><button class="btn">{{$second_parent->first_name}}</button></a><br />
+        @endforeach
+    </div>
 </div>
-<div class="flex items-center justify-center w-full">
-    Dane dziecka
+<div class="grid md:grid-cols-4 place-items-stretch m-10">
+    <div class="flex items-center justify-center w-full col-start-2 " style="text-align: center">
+        <div class="w-full">Dane dziecka </div>
+        <div class="w-full"><a href="{{route('kids.create')}}"><button class="btn">Dodaj dane dziecka</button></a></div>
+    </div>
+    <div class="flex items-center justify-center w-full col-start-3" style="text-align: center">
+
+    </div>
 </div>
 
 @include('footer.main')
