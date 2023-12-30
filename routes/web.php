@@ -33,6 +33,8 @@ Route::middleware([
     Route::post('/user/store',[\App\Http\Controllers\UserController::class,'store']);
     Route::resource('/user/second_parent',\App\Http\Controllers\SecondParentsController::class);
     Route::resource('/user/kids',\App\Http\Controllers\KidsController::class);
+    Route::get('/user/kids/{kid}/exam',[\App\Http\Controllers\KidsController::class,'exam_add']);
+    Route::post('/user/kids/{kid}/exam_store',[\App\Http\Controllers\KidsController::class,'exam_store']);
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {

@@ -46,9 +46,21 @@
         <div class="w-full"><a href="{{route('kids.create')}}"><button class="btn">Dodaj dane dziecka</button></a></div>
     </div>
     <div class="flex items-center justify-center w-full col-start-3" style="text-align: center">
-        @foreach($kids as $kid)
-            <a href="{{route('kids.edit',$kid->id)}}"><button class="btn">{{$kid->first_name}}</button></a><br />
-        @endforeach
+        <div class="grid grid-cols-3 place-items-stretch">
+            @foreach($kids as $kid)
+                <div>
+                    <a href="{{route('kids.edit',$kid->id)}}"><button class="btn">{{$kid->first_name}}</button></a><br />
+                </div>
+                <div>
+                    <a href="{{url('user/kids/'.$kid->id.'/exam')}}">Wyniki egzaminu</a>
+                </div>
+                <div>
+                    Świadectwo
+                </div>
+
+            @endforeach
+        </div>
+
     </div>
 </div>
 

@@ -145,6 +145,73 @@ class KidsController extends Controller
         }
     }
 
+    public function exam_add(int $kid_id)
+    {
+        //zabezpieczenie przed ponownym wysłaniem wyników egzaminu
+//        if(!is_null(Kids::find($kid_id)->exam_pl)){
+//            return redirect('user');
+//        }
+        return view('kids.exam',['kid'=>Kids::find($kid_id)]);
+    }
+    public function exam_store(Request $request, int $kid_id)
+    {
+        $kid=Kids::find($kid_id);
+        if(isset($kid->user_id)){
+            if($kid->user_id==Auth::user()->id){
+                $request->validate([
+
+                ]);
+                $kid->exam_pl=$request->pl;
+                $kid->exam_fl=$request->fl;
+                $kid->exam_mat=$request->mat;
+                $imageName = time().'.'.$request->image->extension();
+                $kid->exam_photo=$imageName;
+                $request->image->move(public_path('images\exam'), $imageName);
+                $kid->save();
+                return redirect('user');
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
+    }
+    public function certificate_add(int $kid_id)
+    {
+        //zabezpieczenie przed ponownym wysłaniem wyników świadectwa
+//        if(Kids::find($kid_id)->certificate_fill!=0)){
+//            return redirect('user');
+//        }
+        return view('kids.certificate',['kid'=>Kids::find($kid_id)]);
+    }
+    public function certificate_store(Request $request, int $kid_id)
+    {
+        $kid=Kids::find($kid_id);
+        if(isset($kid->user_id)){
+            if($kid->user_id==Auth::user()->id){
+                $request->validate([
+
+                ]);
+                $kid->exam_pl=$request->pl;
+                $kid->exam_fl=$request->fl;
+                $kid->exam_mat=$request->mat;
+                $imageName = time().'.'.$request->image->extension();
+                $kid->exam_photo=$imageName;
+                $request->image->move(public_path('images\exam'), $imageName);
+                $kid->save();
+                return redirect('user');
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
+    }
+
     /**
      * Remove the specified resource from storage.
      */
