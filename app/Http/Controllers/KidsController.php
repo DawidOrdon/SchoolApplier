@@ -48,6 +48,7 @@ class KidsController extends Controller
         $kid->email=$request['email'];
         $kid->phone_number=$request['phone'];
         $kid->s_parent=$request['s_parent'];
+        $kid->certificate_fill=0;
 
         if($request->address_data){
             $kid->zipcode=$user->zipcode;
@@ -68,6 +69,7 @@ class KidsController extends Controller
             $kid->voivodeship=$request['voivodeship'];
         }
         $kid->save();
+        return redirect('user');
 
     }
 
@@ -82,17 +84,65 @@ class KidsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Kids $kids)
+    public function edit(int $kid_id)
     {
-        //
+        $kid=Kids::find($kid_id);
+        if(isset($kid->user_id)){
+            if($kid->user_id==Auth::user()->id){
+                return view('kids.edit',['kid'=>Kids::find($kid_id)]);
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Kids $kids)
+    public function update(Request $request, int $kid_id)
     {
-        //
+        $kid=Kids::find($kid_id);
+        if(isset($kid->user_id)){
+            if($kid->user_id==Auth::user()->id){
+                $request->validate([
+
+                ]);
+                $kid = Kids::find($kid_id);
+                $user=Auth::user();
+                $kid->user_id=$user->id;
+                $kid->first_name=$request['first_name'];
+                $kid->second_name=$request['second_name'];
+                $kid->last_name=$request['last_name'];
+                $kid->pesel=$request['pesel'];
+                $kid->birth_date=$request['birth_date'];
+                $kid->school_number=$request['school_number'];
+                $kid->school_city=$request['school_city'];
+                $kid->school_commune=$request['school_commune'];
+                $kid->school_voivodeship=$request['school_voivodeship'];
+                $kid->email=$request['email'];
+                $kid->phone_number=$request['phone'];
+                $kid->zipcode=$request['zipcode'];
+                $kid->post=$request['post'];
+                $kid->address=$request['address'];
+                $kid->city=$request['city'];
+                $kid->commune=$request['commune'];
+                $kid->county=$request['county'];
+                $kid->voivodeship=$request['voivodeship'];
+
+                $kid->save();
+                return redirect('user');
+            }
+            else{
+                return redirect('user');
+            }
+        }
+        else{
+            return redirect('user');
+        }
     }
 
     /**

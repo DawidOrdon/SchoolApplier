@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kids;
 use App\Models\SecondParents;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class UserController extends Controller
     {
         return view('users.index',[
             'user'=>Auth::user(),
-            'second_parents'=>SecondParents::all()->where('user_id','=',Auth::user()->id)
+            'second_parents'=>SecondParents::all()->where('user_id','=',Auth::user()->id),
+            'kids'=>Kids::all()->where('user_id','=',Auth::user()->id)
         ]);
     }
     public function edit()
