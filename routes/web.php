@@ -30,11 +30,13 @@ Route::middleware([
     })->name('dashboard');
     Route::get('/user',[\App\Http\Controllers\UserController::class,'index']);
     Route::get('/user/edit',[\App\Http\Controllers\UserController::class,'edit']);
-    Route::post('/user/store',[\App\Http\Controllers\UserController::class,'store']);
+    Route::post('/user/update',[\App\Http\Controllers\UserController::class,'update']);
     Route::resource('/user/second_parent',\App\Http\Controllers\SecondParentsController::class);
     Route::resource('/user/kids',\App\Http\Controllers\KidsController::class);
     Route::get('/user/kids/{kid}/exam',[\App\Http\Controllers\KidsController::class,'exam_add']);
     Route::post('/user/kids/{kid}/exam_store',[\App\Http\Controllers\KidsController::class,'exam_store']);
+    Route::get('/user/kids/{kid}/certificate',[\App\Http\Controllers\KidsController::class,'certificate_add']);
+    Route::post('/user/kids/{kid}/certificate_store',[\App\Http\Controllers\KidsController::class,'certificate_store']);
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {

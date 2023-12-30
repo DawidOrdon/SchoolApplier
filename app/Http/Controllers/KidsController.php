@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\kid_subjects;
 use App\Models\Kids;
 use App\Models\SecondParents;
+use App\Models\Subjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -184,7 +186,7 @@ class KidsController extends Controller
 //        if(Kids::find($kid_id)->certificate_fill!=0)){
 //            return redirect('user');
 //        }
-        return view('kids.certificate',['kid'=>Kids::find($kid_id)]);
+        return view('kids.certificate',['kid'=>Kids::find($kid_id),'subjects'=>Subjects::all()]);
     }
     public function certificate_store(Request $request, int $kid_id)
     {
@@ -194,14 +196,15 @@ class KidsController extends Controller
                 $request->validate([
 
                 ]);
-                $kid->exam_pl=$request->pl;
-                $kid->exam_fl=$request->fl;
-                $kid->exam_mat=$request->mat;
-                $imageName = time().'.'.$request->image->extension();
-                $kid->exam_photo=$imageName;
-                $request->image->move(public_path('images\exam'), $imageName);
-                $kid->save();
-                return redirect('user');
+                //return($request->subjects);
+                foreach($request->subjects as $key=>$subject){
+                    $k_s = new kid_subjects();
+                    $k_s->kid_id = $kid_id;
+                    $k_s->subject_id=$key;
+                    $k_s->value=$subject;
+                    $k_s->save();
+
+                }
             }
             else{
                 return redirect('user');

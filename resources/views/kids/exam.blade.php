@@ -43,7 +43,7 @@
                 @endforeach
             @endif
         </div>
-
+{{--    zdjęcie--}}
         <div class="relative z-0 w-full mb-5 group">
             Zdjęcie potweirdzające wynik
         </div>

@@ -19,10 +19,7 @@ class SubjectsSeeder extends Seeder
             'name'=>'Matematyka'
         ]);
         \App\Models\Subjects::create([
-            'name'=>'Pierwszy język obcy'
-        ]);
-        \App\Models\Subjects::create([
-            'name'=>'Drugi język obcy'
+            'name'=>'Język obcy'
         ]);
         \App\Models\Subjects::create([
             'name'=>'Historia'
@@ -41,9 +38,6 @@ class SubjectsSeeder extends Seeder
         ]);
          \App\Models\Subjects::create([
             'name'=>'Informatyka'
-        ]);
-        \App\Models\Subjects::create([
-            'name'=>'Wychowanie fizyczne'
         ]);
         \App\Models\Subjects::create([
             'name'=>'Wiedza o społeczeństwie'

@@ -55,7 +55,7 @@
                     <a href="{{url('user/kids/'.$kid->id.'/exam')}}">Wyniki egzaminu</a>
                 </div>
                 <div>
-                    Świadectwo
+                    <a href="{{url('user/kids/'.$kid->id.'/certificate')}}">Świadectwo</a>
                 </div>
 
             @endforeach
