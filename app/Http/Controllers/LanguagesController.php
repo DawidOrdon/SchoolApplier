@@ -16,7 +16,10 @@ class LanguagesController extends Controller
      */
     public function index(int $school_id)
     {
-        return view('languages.add',['school_id'=>$school_id,'languages'=>Languages::all()]);
+        return view('languages.add',['school_id'=>$school_id,
+                                        'languages'=>SchoolLanguage::rightJoin('languages','school_languages.language_id','=','languages.id')
+                                                                    ->get(['school_id','languages.id','languages.name'])
+                                                                    ->wherenull('school_id')]);
     }
 
     /**
