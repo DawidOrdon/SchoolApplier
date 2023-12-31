@@ -42,6 +42,9 @@ Route::middleware([
 Route::group(['middleware' => ['role:admin|school']], function () {
     Route::get('/schools/{school_id}/admin',[\App\Http\Controllers\SchoolsController::class,'admin_page']);
     Route::get('/school/edit',[\App\Http\Controllers\SchoolsController::class,'edit']);
+    Route::get('/schools/{school}/edit/languages',[\App\Http\Controllers\LanguagesController::class,'index']);
+    Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store']);
+    Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy']);
 });
 Route::resource('/schools',\App\Http\Controllers\SchoolsController::class);
 Route::get('/{school_id}',[\App\Http\Controllers\SchoolsController::class,'show']);

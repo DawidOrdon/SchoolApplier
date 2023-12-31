@@ -25,8 +25,20 @@
             @endforeach
         </div>
     </div>
-    <div class="items-center justify-center w-full" id="new_class_form">
-
+    <div class="w-full p-10 flex items-center justify-center">
+        <div class="w-1/6 flex items-center justify-center" id="new_class_btn">
+            <a href="{{url('/schools/'.$school->id.'/edit/languages')}}">Języki oferowane przez szkołę</a>
+        </div>
+        @foreach($languages as $language)
+            <div class="w-1/6 flex items-center justify-center" id="new_class_btn">
+                {{$language->name}}
+                <form method="post" action="{{url('/schools/'.$school->id.'/edit/languages/delete')}}">
+                    @csrf
+                    <input type="hidden" name="lang_id" value="{{$language->id}}">
+                    <button type="submit" style="color:red">Usun</button>
+                </form>
+            </div>
+        @endforeach
     </div>
 </div>
 @endforeach
