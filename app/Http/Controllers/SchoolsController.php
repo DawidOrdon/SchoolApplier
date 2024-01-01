@@ -105,9 +105,10 @@ class SchoolsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(schools $schools)
+    public function show(int $school_id)
     {
-        return"detale skoly";
+        return view('schools.details',['school_id'=>$school_id,
+                                            'classes'=>Classes::all()->where('school_id','=',$school_id)]);
     }
 
     /**
