@@ -18,24 +18,26 @@ class ApplicationsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(int $school_id,int $class_id)
+    public function index()
+    {
+        return 'siema';
+    }
+
+
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create(int $school_id,int $class_id)
     {
         return view('applications.add',[
             'school'=>schools::find($school_id),
             'class'=>Classes::find($class_id),
             'languages'=>SchoolLanguage::join('languages','school_languages.language_id','=','languages.id')
-                                        ->get(['languages.name','school_languages.school_id','languages.id'])
-                                        ->where('school_id','=',$school_id),
+                ->get(['languages.name','school_languages.school_id','languages.id'])
+                ->where('school_id','=',$school_id),
             'kids'=>Kids::all()->where('user_id','=',Auth::user()->id)
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -72,7 +74,25 @@ class ApplicationsController extends Controller
         $app->password=$hash;
         $app->add_info=$request->add_info;
         $app->save();
-        return $app;
+        return $randomString;
+    }
+
+    public function unlocker()
+    {
+        return view ('applications.unlocker');
+    }
+    public function unlock(Request $request)
+    {
+        $request->validate([
+            'id'=>'exists:applications'
+        ]);
+        $app = Applications::find($request->id);
+        if(Hash::check($request->pass,$app->password)){
+            $app->unlock=1;
+            $app->save();
+            return redirect()->back();
+        }
+        return 'Błędne hasło';
     }
 
     /**

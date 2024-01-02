@@ -24,7 +24,7 @@ return new class extends Migration
             $table->boolean('info1');
             $table->boolean('info2');
             $table->boolean('info3');
-            $table->string('add_info');
+            $table->string('add_info')->nullable();
             $table->timestamps();
         });
     }

@@ -37,7 +37,7 @@ Route::middleware([
     Route::post('/user/kids/{kid}/exam_store',[\App\Http\Controllers\KidsController::class,'exam_store']);
     Route::get('/user/kids/{kid}/certificate',[\App\Http\Controllers\KidsController::class,'certificate_add']);
     Route::post('/user/kids/{kid}/certificate_store',[\App\Http\Controllers\KidsController::class,'certificate_store']);
-    Route::get('/schools/{school}/{class}/application',[\App\Http\Controllers\ApplicationsController::class,'index']);
+    Route::get('/schools/{school}/{class}/application',[\App\Http\Controllers\ApplicationsController::class,'create']);
     Route::post('/schools/{school}/{class}/application/save',[\App\Http\Controllers\ApplicationsController::class,'store']);
 });
 
@@ -47,6 +47,9 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::get('/schools/{school}/edit/languages',[\App\Http\Controllers\LanguagesController::class,'index']);
     Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store']);
     Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy']);
+    Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show']);
+    Route::get('/schools/unlocker',[\App\Http\Controllers\ApplicationsController::class,'unlocker']);
+    Route::post('/schools/unlock',[\App\Http\Controllers\ApplicationsController::class,'unlock']);
 });
 Route::resource('/schools',\App\Http\Controllers\SchoolsController::class);
 Route::get('/{school_id}',[\App\Http\Controllers\SchoolsController::class,'show']);

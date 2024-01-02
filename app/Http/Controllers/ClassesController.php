@@ -76,9 +76,9 @@ class ClassesController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Classes $classes)
+    public function show(int $school_id,int $class_id)
     {
-        //
+        return 'siema klasa';
     }
 
     /**
