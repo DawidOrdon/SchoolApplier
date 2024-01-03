@@ -198,32 +198,20 @@ class ApplicationsController extends Controller
     {
         $request->validate([]);
         $points=0;
-        foreach ($request->rating as $rating){
-            switch($rating){
-                case 6:{
-                    $points+=18;
-                    break;
-                }
-                case 5:{
-                    $points+=17;
-                    break;
-                }
-                case 4:{
-                    $points+=14;
-                    break;
-                }
-                case 3:{
-                    $points+=8;
-                    break;
-                }
-                case 2:{
-                    $points+=2;
-                    break;
-                }
-            }
+        $points+=$request->strip;
+        $points+=$request->vol;
+        $add_points=0;
+        $add_points+=$request->add_1;
+        $add_points+=$request->add_2;
+        $add_points+=$request->add_3;
+        $add_points+=$request->add_4;
+        $add_points+=$request->add_5;
+        if($add_points>18){
+            $add_points=18;
         }
+        $points+=$add_points;
         $app = Applications::find($app);
-        $app->certificate_points=$points;
+        $app->bonus_points=$points;
         $app->save();
 
         return redirect('/schools/'.$school.'/'.$class.'/applications/');

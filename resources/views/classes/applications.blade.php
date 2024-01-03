@@ -42,11 +42,11 @@
                     <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/'.$application->id.'/certificate')}}">dodaj</a>
                 </td>
             @endif
-            @if($application->add_points>0)
+            @if($application->bonus_points>0)
                 <td>
-                    {{$application->add_points}}
+                    {{$application->bonus_points}}
                 </td>
-            @elseif(!is_null($application->add_photo))
+            @elseif(!is_null($application->certificate_photo))
                 <td style="color:green">
                     <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/'.$application->id.'/add_info')}}">potwierdz</a>
                 </td>
