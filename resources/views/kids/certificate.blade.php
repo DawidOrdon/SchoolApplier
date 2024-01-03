@@ -42,7 +42,7 @@
                 </div>
                 <label class="block">
                     <span class="sr-only">Choose profile photo</span>
-                    <input type="file" name="image" onchange="loadFile(event,'preview_img1')" class="block w-full text-sm text-slate-500
+                    <input type="file" name="image1" onchange="loadFile(event,'preview_img1')" class="block w-full text-sm text-slate-500
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border-0
                             file:text-sm file:font-semibold
@@ -62,7 +62,7 @@
                 </div>
                 <label class="block">
                     <span class="sr-only">Choose profile photo</span>
-                    <input type="file" name="image" onchange="loadFile(event,'preview_img2')" class="block w-full text-sm text-slate-500
+                    <input type="file" name="image2" onchange="loadFile(event,'preview_img2')" class="block w-full text-sm text-slate-500
                             file:mr-4 file:py-2 file:px-4
                             file:rounded-full file:border-0
                             file:text-sm file:font-semibold

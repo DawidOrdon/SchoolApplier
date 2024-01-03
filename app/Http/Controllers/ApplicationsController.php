@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Applications;
 use App\Models\Classes;
+use App\Models\kid_subjects;
 use App\Models\Kids;
 use App\Models\Languages;
 use App\Models\SchoolLanguage;
 use App\Models\schools;
+use App\Models\Subjects;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -95,6 +97,137 @@ class ApplicationsController extends Controller
         return 'Błędne hasło';
     }
 
+    public function exam_check(int $school, int $class, int $app)
+    {
+        //do zabezpieczenia
+        $data = Applications::join('kids','kids.id','=','applications.kid_id')
+                            ->get(['exam_photo','applications.id','kids.exam_pl','kids.exam_fl','kids.exam_mat','kids.first_name','kids.last_name'])
+                            ->find($app);
+
+
+//        return $data;
+        return view('applications.exam',['app'=>$data,
+                                                'school_id'=>$school,
+                                                'class_id'=>$class,
+                                                'app_id'=>$app]);
+    }
+
+    public function exam_save(Request $request, int $school, int $class, int $app)
+    {
+        $request->validate([]);
+        $points=0;
+        $points += $request->pl*0.35;
+        $points += $request->fl*0.30;
+        $points += $request->mat*0.35;
+        $app = Applications::find($app);
+        $app->exam_points=$points;
+        $app->save();
+
+        return redirect('/schools/'.$school.'/'.$class.'/applications/');
+    }
+    public function certificate_check(int $school, int $class, int $app)
+    {
+        //do zabezpieczenia
+        $data = Applications::join('kids','kids.id','=','applications.kid_id')
+                            ->join('classes','applications.class_id','=','classes.id')
+                            ->get(['certificate_photo1','certificate_photo2','applications.id','kids.first_name','kids.last_name','classes.subject1','classes.subject2','kid_id'])
+                            ->find($app);
+
+        $data->subjects=kid_subjects::join('subjects','subjects.id','=','kid_subjects.subject_id')
+            ->get(['subjects.name','kid_subjects.kid_id','subject_id','value'])
+            ->where('kid_id','=',$data->kid_id)
+            ->whereIn('subject_id',[1,2,$data->subject1,$data->subject2]);
+
+
+
+        return view('applications.certificate',['app'=>$data,
+                                                'school_id'=>$school,
+                                                'class_id'=>$class,
+                                                'app_id'=>$app]);
+    }
+
+    public function certificate_save(Request $request, int $school, int $class, int $app)
+    {
+        $request->validate([]);
+        $points=0;
+        foreach ($request->rating as $rating){
+            switch($rating){
+                case 6:{
+                    $points+=18;
+                    break;
+                }
+                case 5:{
+                    $points+=17;
+                    break;
+                }
+                case 4:{
+                    $points+=14;
+                    break;
+                }
+                case 3:{
+                    $points+=8;
+                    break;
+                }
+                case 2:{
+                    $points+=2;
+                    break;
+                }
+            }
+        }
+        $app = Applications::find($app);
+        $app->certificate_points=$points;
+        $app->save();
+
+        return redirect('/schools/'.$school.'/'.$class.'/applications/');
+    }
+    public function add_info_check(int $school, int $class, int $app)
+    {
+        //do zabezpieczenia
+        $data = Applications::join('kids','kids.id','=','applications.kid_id')
+                            ->join('classes','applications.class_id','=','classes.id')
+                            ->get(['certificate_photo1','certificate_photo2','applications.id','kids.first_name','kids.last_name','kid_id'])
+                            ->find($app);
+
+        return view('applications.add_info',['app'=>$data,
+                                                'school_id'=>$school,
+                                                'class_id'=>$class,
+                                                'app_id'=>$app]);
+    }
+
+    public function add_info_save(Request $request, int $school, int $class, int $app)
+    {
+        $request->validate([]);
+        $points=0;
+        foreach ($request->rating as $rating){
+            switch($rating){
+                case 6:{
+                    $points+=18;
+                    break;
+                }
+                case 5:{
+                    $points+=17;
+                    break;
+                }
+                case 4:{
+                    $points+=14;
+                    break;
+                }
+                case 3:{
+                    $points+=8;
+                    break;
+                }
+                case 2:{
+                    $points+=2;
+                    break;
+                }
+            }
+        }
+        $app = Applications::find($app);
+        $app->certificate_points=$points;
+        $app->save();
+
+        return redirect('/schools/'.$school.'/'.$class.'/applications/');
+    }
     /**
      * Display the specified resource.
      */

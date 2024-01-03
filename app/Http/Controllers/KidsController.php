@@ -205,6 +205,14 @@ class KidsController extends Controller
                     $k_s->save();
 
                 }
+
+                $imageName = time().'.'.$request->image1->extension();
+                $kid->certificate_photo1=$imageName;
+                $request->image1->move(public_path('images\certificate1'), $imageName);
+                $imageName = time().'.'.$request->image2->extension();
+                $kid->certificate_photo2=$imageName;
+                $request->image2->move(public_path('images\certificate2'), $imageName);
+                $kid->save();
             }
             else{
                 return redirect('user');

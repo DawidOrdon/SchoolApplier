@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Applications;
 use App\Models\Classes;
 use App\Models\schools;
 use App\Models\Schools_types;
@@ -78,7 +79,15 @@ class ClassesController extends Controller
      */
     public function show(int $school_id,int $class_id)
     {
-        return 'siema klasa';
+        $application=Applications::join('kids','kids.id','=','applications.kid_id')
+                                    ->get(['kids.first_name', 'kids.last_name', 'applications.id','applications.class_id','applications.exam_points','applications.certificate_points','applications.bonus_points','applications.unlock','kids.exam_photo','kids.certificate_photo1','kids.certificate_photo2'])
+                                    ->where('unlock','=',1)
+                                    ->where('class_id','=',$class_id);
+//        return $application;
+        return view('classes.applications',['applications'=>$application,
+                                                'school_id'=>$school_id,
+                                                'class_id'=>$class_id]);
+
     }
 
     /**

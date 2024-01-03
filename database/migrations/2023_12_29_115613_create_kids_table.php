@@ -37,8 +37,8 @@ return new class extends Migration
             $table->unsignedSmallInteger('exam_fl')->nullable();
             $table->unsignedSmallInteger('exam_mat')->nullable();
             $table->string('exam_photo')->nullable();
-            $table->tinyInteger('certificate_fill')->nullable();
-            $table->string('certificate_photo')->nullable();
+            $table->string('certificate_photo1')->nullable();
+            $table->string('certificate_photo2')->nullable();
             $table->timestamps();
         });
     }

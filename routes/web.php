@@ -48,6 +48,12 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store']);
     Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy']);
     Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show']);
+    Route::get('/schools/{school}/{class}/applications/{app}/exam',[\App\Http\Controllers\ApplicationsController::class,'exam_check']);
+    Route::post('/schools/{school}/{class}/applications/{app}/exam/save',[\App\Http\Controllers\ApplicationsController::class,'exam_save']);
+    Route::get('/schools/{school}/{class}/applications/{app}/certificate',[\App\Http\Controllers\ApplicationsController::class,'certificate_check']);
+    Route::post('/schools/{school}/{class}/applications/{app}/certificate/save',[\App\Http\Controllers\ApplicationsController::class,'certificate_save']);
+    Route::get('/schools/{school}/{class}/applications/{app}/add_info',[\App\Http\Controllers\ApplicationsController::class,'add_info_check']);
+    Route::post('/schools/{school}/{class}/applications/{app}/add_info/save',[\App\Http\Controllers\ApplicationsController::class,'add_info_save']);
     Route::get('/schools/unlocker',[\App\Http\Controllers\ApplicationsController::class,'unlocker']);
     Route::post('/schools/unlock',[\App\Http\Controllers\ApplicationsController::class,'unlock']);
 });
