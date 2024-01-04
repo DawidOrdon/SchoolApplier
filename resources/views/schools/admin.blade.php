@@ -21,7 +21,7 @@
     <div class="w-full p-10 flex items-center justify-center">
         <div class="w-1/6 flex items-center justify-center" id="new_class_btn">
             @foreach($classes as $class)
-                {{$class->name}}
+                <a href="{{url('schools/'.$school->id.'/'.$class->id.'/applications')}}">{{$class->name}}</a>
             @endforeach
         </div>
     </div>

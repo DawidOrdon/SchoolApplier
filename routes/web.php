@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,7 +44,7 @@ Route::middleware([
 
 Route::group(['middleware' => ['role:admin|school']], function () {
     Route::get('/schools/{school_id}/admin',[\App\Http\Controllers\SchoolsController::class,'admin_page']);
-    Route::get('/school/edit',[\App\Http\Controllers\SchoolsController::class,'edit']);
+//    Route::get('/school/edit',[\App\Http\Controllers\SchoolsController::class,'edit']);
     Route::get('/schools/{school}/edit/languages',[\App\Http\Controllers\LanguagesController::class,'index']);
     Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store']);
     Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy']);
@@ -56,6 +57,10 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::post('/schools/{school}/{class}/applications/{app}/add_info/save',[\App\Http\Controllers\ApplicationsController::class,'add_info_save']);
     Route::get('/schools/unlocker',[\App\Http\Controllers\ApplicationsController::class,'unlocker']);
     Route::post('/schools/unlock',[\App\Http\Controllers\ApplicationsController::class,'unlock']);
+    Route::get('/y_school',function (){
+        $school=\App\Models\schools::all()->where('user_id','=',Auth::user()->id);
+        return redirect('schools/'.arr::first($school)->id.'/admin');
+    });
 });
 Route::resource('/schools',\App\Http\Controllers\SchoolsController::class);
 Route::get('/{school_id}',[\App\Http\Controllers\SchoolsController::class,'show']);
