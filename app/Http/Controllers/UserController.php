@@ -24,7 +24,18 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-        $request->validate([]);
+        $request->validate([
+            'first_name'=>'required|min:2|max:13|alpha',
+            'last_name'=>'required|min:2|max:51|alpha',
+            'phone'=>'required|numeric|digits:9',
+            'zipcode'=>'required|min:5|max:6|',
+            'post'=>'',
+            'address'=>'',
+            'city'=>'',
+            'commune'=>'',
+            'county'=>'',
+            'voivodeship'=>'',
+        ]);
         $user=User::find(Auth::user()->id);
         $user->first_name=$request['first_name'];
         $user->last_name=$request['last_name'];

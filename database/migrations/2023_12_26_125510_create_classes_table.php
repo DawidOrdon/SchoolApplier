@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('classes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('school_id')->references('id')->on('schools');
-            $table->string('name');
-            $table->string('desc');
+            $table->string('name',50);
+            $table->string('desc',255);
             $table->integer('slots');
             $table->foreignId('school_type')->references('id')->on('schools_types');
             $table->foreignId('subject1')->references('id')->on('subjects');

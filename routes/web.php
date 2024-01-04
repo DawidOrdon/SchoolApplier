@@ -21,6 +21,7 @@ Route::get('/test', function () {
     return view('test');
 });
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
@@ -63,5 +64,8 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     });
 });
 Route::resource('/schools',\App\Http\Controllers\SchoolsController::class);
-Route::get('/{school_id}',[\App\Http\Controllers\SchoolsController::class,'show']);
+Route::get('/contact',function(){
+    return view('contact');
+});
+
 Route::resource('{school_id}/classes',\App\Http\Controllers\ClassesController::class);

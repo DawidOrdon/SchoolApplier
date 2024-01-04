@@ -20,16 +20,16 @@ return new class extends Migration
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
-            $table->string('first_name')->nullable();
-            $table->string('last_name')->nullable();
-            $table->string('phone_number')->nullable();
-            $table->string('zipcode')->nullable();
-            $table->string('post')->nullable();
-            $table->string('address')->nullable();
-            $table->string('city')->nullable();
-            $table->string('commune')->nullable();
-            $table->string('county')->nullable();
-            $table->string('voivodeship')->nullable();
+            $table->string('first_name',50)->nullable();
+            $table->string('last_name',100)->nullable();
+            $table->string('phone_number',20)->nullable();
+            $table->string('zipcode',10)->nullable();
+            $table->string('post',50)->nullable();
+            $table->string('address',100)->nullable();
+            $table->string('city',50)->nullable();
+            $table->string('commune',50)->nullable();
+            $table->string('county',50)->nullable();
+            $table->string('voivodeship',20)->nullable();
             $table->timestamps();
         });
     }

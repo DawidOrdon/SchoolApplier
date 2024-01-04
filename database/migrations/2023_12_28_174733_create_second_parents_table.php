@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users');
             $table->string('email');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone_number');
-            $table->string('zipcode');
-            $table->string('post');
-            $table->string('address');
-            $table->string('city');
-            $table->string('commune');
-            $table->string('county');
-            $table->string('voivodeship');
+            $table->string('first_name',50)->nullable();
+            $table->string('last_name',100)->nullable();
+            $table->string('phone_number',20)->nullable();
+            $table->string('zipcode',10)->nullable();
+            $table->string('post',50)->nullable();
+            $table->string('address',100)->nullable();
+            $table->string('city',50)->nullable();
+            $table->string('commune',50)->nullable();
+            $table->string('county',50)->nullable();
+            $table->string('voivodeship',20)->nullable();
             $table->timestamps();
         });
     }
