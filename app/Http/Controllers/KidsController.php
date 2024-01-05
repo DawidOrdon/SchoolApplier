@@ -50,7 +50,6 @@ class KidsController extends Controller
         $kid->email=$request['email'];
         $kid->phone_number=$request['phone'];
         $kid->s_parent=$request['s_parent'];
-        $kid->certificate_fill=0;
 
         if($request->address_data){
             $kid->zipcode=$user->zipcode;

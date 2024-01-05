@@ -28,7 +28,7 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect('/schools');
     })->name('dashboard');
     Route::get('/user',[\App\Http\Controllers\UserController::class,'index']);
     Route::get('/user/edit',[\App\Http\Controllers\UserController::class,'edit']);

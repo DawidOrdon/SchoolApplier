@@ -28,13 +28,13 @@ class UserController extends Controller
             'first_name'=>'required|min:2|max:13|alpha',
             'last_name'=>'required|min:2|max:51|alpha',
             'phone'=>'required|numeric|digits:9',
-            'zipcode'=>'required|min:5|max:6|',
-            'post'=>'',
-            'address'=>'',
-            'city'=>'',
-            'commune'=>'',
-            'county'=>'',
-            'voivodeship'=>'',
+            'zipcode'=>'required|min:5|max:6',
+            'post'=>'required|min:2|max:50',
+            'address'=>'required|min:2|max:100',
+            'city'=>'required|min:2|max:50',
+            'commune'=>'required|min:2|max:50',
+            'county'=>'required|min:2|max:50',
+            'voivodeship'=>'required|min:2|max:20',
         ]);
         $user=User::find(Auth::user()->id);
         $user->first_name=$request['first_name'];

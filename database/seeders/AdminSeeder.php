@@ -24,7 +24,7 @@ class AdminSeeder extends Seeder
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
-        ])->assignRole('admin');
+        ])->assignRole('admin')->assignRole('school');
         \App\Models\User::factory()->create([
             'name' => 'user',
             'email' => 'user@user.pl',
@@ -35,6 +35,17 @@ class AdminSeeder extends Seeder
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'first_name'=>'Jan',
+            'last_name'=>'Kowalski',
+            'phone_number'=>'123456789',
+            'zipcode'=>'64-510',
+            'post'=>'Wronki',
+            'address'=>'Nowa 199',
+            'city'=>'Wronki',
+            'commune'=>'Wronki',
+            'county'=>'Szamotuły',
+            'voivodeship'=>'Wielkopolska'
+
         ])->assignRole('user');
     }
 }

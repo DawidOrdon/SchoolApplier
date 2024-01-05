@@ -1,7 +1,7 @@
 @include('navbar.main')
 <div class="grid md:grid-cols-4 place-items-stretch">
     <div class="flex items-center justify-center w-full col-start-2" style="text-align: center">
-        Moje dane <br />
+        <a href="{{url('user/edit')}}">Moje dane </a>
     </div>
     <div class="flex items-center justify-center w-full col-start-3" >
             <table>
