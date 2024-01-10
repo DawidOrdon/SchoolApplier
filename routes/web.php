@@ -42,6 +42,8 @@ Route::middleware([
     Route::get('/schools/{school}/{class}/application',[\App\Http\Controllers\ApplicationsController::class,'create']);
     Route::post('/schools/{school}/{class}/application/save',[\App\Http\Controllers\ApplicationsController::class,'store']);
     Route::get('/my_apps',[\App\Http\Controllers\ApplicationsController::class,'index']);
+    Route::post('/my_apps/drop',[\App\Http\Controllers\ApplicationsController::class,'destroy']);
+    Route::post('/my_apps/pdf',[\App\Http\Controllers\ApplicationsController::class,'new_pdf']);
     Route::get('/my_apps/test',[\App\Http\Controllers\ApplicationsController::class,'tests']);
 });
 

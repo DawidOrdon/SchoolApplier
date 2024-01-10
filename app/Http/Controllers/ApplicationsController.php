@@ -30,11 +30,14 @@ class ApplicationsController extends Controller
                             ->join('users','users.id','=','kids.user_id')
                             ->join('classes','classes.id','=','applications.class_id')
                             ->join('schools','schools.id','=','classes.school_id')
-                            ->get(['users.id as user_id','applications.id','schools.name as school_name','classes.name as class_name'])
+                            ->get(['users.id as user_id',
+                                'applications.id as id',
+                                'schools.name as school_name',
+                                'classes.name as class_name',
+                                'kids.first_name as first_name','kids.last_name as last_name'])
                             ->where('user_id','=',Auth::user()->id);
-        $data=arr::first($apps)[0];
-        return (arr::first($apps));
-        return view('applications.my_apps');
+//        return ($apps);
+        return view('applications.my_apps',['apps'=>$apps]);
     }
 
 
@@ -63,7 +66,7 @@ class ApplicationsController extends Controller
         ]);
         session_start();
         $pdfcontroller = new PDFController();
-        if(isset($_SESSION['id'])&&isset($_SESSION['password']))
+        if(isset($_SESSION['kid_id'])&&$_SESSION['kid_id']==$request->kid&&isset($_SESSION['class'])&&$_SESSION['class']==$class)
         {
             $pdf=$pdfcontroller->createPDF($_SESSION['id'],$_SESSION['password']);
         }else{
@@ -98,6 +101,9 @@ class ApplicationsController extends Controller
             $app->save();
             $_SESSION['password']=$randomString;
             $_SESSION['id']=$app->id;
+            $_SESSION['kid_id']=$app->kid_id;
+            $_SESSION['class']=$app->class_id;
+
             $pdf=$pdfcontroller->createPDF($_SESSION['id'],$_SESSION['password']);
         }
 
@@ -268,8 +274,24 @@ class ApplicationsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Applications $applications)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([]);
+        Applications::destroy($request->id);
+        return redirect()->back();
+    }
+    public function new_pdf(Request $request)
+    {
+        $request->validate([]);
+        $pdfcontroller = new PDFController();
+        $randomString = Str::random(10);
+        $hash=Hash::make($randomString);
+        $app=Applications::find($request->id);
+        $app->password=$hash;
+        $app->save();
+
+
+        $pdf=$pdfcontroller->createPDF($app->id,$randomString);
+        return $pdf->stream();
     }
 }
