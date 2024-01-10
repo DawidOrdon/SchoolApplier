@@ -52,6 +52,10 @@
         .additionaldata .first-td{
             width: 2000px;
         }
+        .codes{
+            float:left;
+            width: 50%;
+        }
 
     </style>
 </head>
@@ -177,6 +181,15 @@
             <td style="width: 40%;">Informacje o stanie zdrowia kandydata <br />(np. choroby przewlekłe, cukrzyca, epilepsja, aleregia i inne)</td><td>{{$com}}</td>
         </tr>
     </table>
+    <div class="codes">
+        {!! DNS1D::getBarcodeHTML($id, 'C39',4,60); !!}
+        id:{{$id}}
+    </div>
+    <div class="codes">
+        {!! DNS1D::getBarcodeHTML($password, 'C39',4,60); !!}
+        password:{{$password}}
+    </div>
+
 </div>
 </body>
 </html>
