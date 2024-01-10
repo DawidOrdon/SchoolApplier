@@ -20,6 +20,14 @@
         @endforeach
     @endif
     <div class="relative z-0 w-full mb-5 group">
+        <label for="first_choice">Pierwszy wybór</label>
+        <input type="radio" name="choice" value="1" id="first_choice">
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
+        <label for="first_choice">Drugi wybór</label>
+        <input type="radio" name="choice" value='2' id="first_choice">
+    </div>
+    <div class="relative z-0 w-full mb-5 group">
         Jakiego języka chciałbyś się uczyć?
     </div>
     <div class="relative z-0 w-full mb-5 group">

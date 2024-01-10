@@ -41,6 +41,8 @@ Route::middleware([
     Route::post('/user/kids/{kid}/certificate_store',[\App\Http\Controllers\KidsController::class,'certificate_store']);
     Route::get('/schools/{school}/{class}/application',[\App\Http\Controllers\ApplicationsController::class,'create']);
     Route::post('/schools/{school}/{class}/application/save',[\App\Http\Controllers\ApplicationsController::class,'store']);
+    Route::get('/my_apps',[\App\Http\Controllers\ApplicationsController::class,'index']);
+    Route::get('/my_apps/test',[\App\Http\Controllers\ApplicationsController::class,'tests']);
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {

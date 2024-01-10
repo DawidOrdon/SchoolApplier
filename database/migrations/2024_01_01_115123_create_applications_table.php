@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('kid_id')->references('id')->on('kids');
             $table->foreignId('class_id')->references('id')->on('classes');
             $table->boolean('unlock');
+            $table->integer('priority');
             $table->unsignedDecimal('exam_points');
             $table->unsignedDecimal('certificate_points');
             $table->unsignedDecimal('bonus_points');
