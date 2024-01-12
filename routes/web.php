@@ -48,12 +48,12 @@ Route::middleware([
 });
 
 Route::group(['middleware' => ['role:admin|school']], function () {
-    Route::get('/schools/{school_id}/admin',[\App\Http\Controllers\SchoolsController::class,'admin_page']);
+    Route::get('/schools/{school}/admin',[\App\Http\Controllers\SchoolsController::class,'admin_page'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
 //    Route::get('/school/edit',[\App\Http\Controllers\SchoolsController::class,'edit']);
-    Route::get('/schools/{school}/edit/languages',[\App\Http\Controllers\LanguagesController::class,'index']);
-    Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store']);
-    Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy']);
-    Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show']);
+    Route::get('/schools/{school}/edit/languages',[\App\Http\Controllers\LanguagesController::class,'index'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
+    Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
+    Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
+    Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show'])->middleware(\App\Http\Middleware\ClassOwner::class);
     Route::get('/schools/{school}/{class}/applications/{app}/exam',[\App\Http\Controllers\ApplicationsController::class,'exam_check']);
     Route::post('/schools/{school}/{class}/applications/{app}/exam/save',[\App\Http\Controllers\ApplicationsController::class,'exam_save']);
     Route::get('/schools/{school}/{class}/applications/{app}/certificate',[\App\Http\Controllers\ApplicationsController::class,'certificate_check']);
@@ -73,3 +73,8 @@ Route::get('/contact',function(){
 });
 
 Route::resource('{school_id}/classes',\App\Http\Controllers\ClassesController::class);
+
+
+Route::get('/middle/{id}', function () {
+return('działa');
+})->middleware(\App\Http\Middleware\SchoolOwner::class);
