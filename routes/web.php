@@ -35,10 +35,10 @@ Route::middleware([
     Route::post('/user/update',[\App\Http\Controllers\UserController::class,'update']);
     Route::resource('/user/second_parent',\App\Http\Controllers\SecondParentsController::class);
     Route::resource('/user/kids',\App\Http\Controllers\KidsController::class);
-    Route::get('/user/kids/{kid}/exam',[\App\Http\Controllers\KidsController::class,'exam_add']);
-    Route::post('/user/kids/{kid}/exam_store',[\App\Http\Controllers\KidsController::class,'exam_store']);
-    Route::get('/user/kids/{kid}/certificate',[\App\Http\Controllers\KidsController::class,'certificate_add']);
-    Route::post('/user/kids/{kid}/certificate_store',[\App\Http\Controllers\KidsController::class,'certificate_store']);
+    Route::get('/user/kids/{kid}/exam',[\App\Http\Controllers\KidsController::class,'exam_add'])->middleware(\App\Http\Middleware\KidOwner::class);
+    Route::post('/user/kids/{kid}/exam_store',[\App\Http\Controllers\KidsController::class,'exam_store'])->middleware(\App\Http\Middleware\KidOwner::class);;
+    Route::get('/user/kids/{kid}/certificate',[\App\Http\Controllers\KidsController::class,'certificate_add'])->middleware(\App\Http\Middleware\KidOwner::class);;
+    Route::post('/user/kids/{kid}/certificate_store',[\App\Http\Controllers\KidsController::class,'certificate_store'])->middleware(\App\Http\Middleware\KidOwner::class);;
     Route::get('/schools/{school}/{class}/application',[\App\Http\Controllers\ApplicationsController::class,'create']);
     Route::post('/schools/{school}/{class}/application/save',[\App\Http\Controllers\ApplicationsController::class,'store']);
     Route::get('/my_apps',[\App\Http\Controllers\ApplicationsController::class,'index']);
