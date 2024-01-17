@@ -7,6 +7,7 @@
             <th>Punkty z egzaminu</th>
             <th>Punkty z świadectwa</th>
             <th>Dodatkowe</th>
+            <th>Suma</th>
         </tr>
     @foreach($applications as $application)
         <tr>
@@ -56,7 +57,10 @@
                 </td>
             @endif
             <td>
-                <a href="{{url('/app/'.$application->id.'/drop')}}">odrzuć</a>
+                {{$application->bonus_points+$application->certificate_points+$application->exam_points}}
+            </td>
+            <td>
+                <a href="{{url('/app/'.$application->id.'/drop')}}" onclick="return confirm('Czy chcesz odrzucić podanie kandydata: {{$application->first_name}} {{$application->last_name}}')">odrzuć</a>
             </td>
 
         </tr>
