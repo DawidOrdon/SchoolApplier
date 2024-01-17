@@ -2,6 +2,14 @@
 <form class="max-w-md mx-auto w-1/3 text-black" action="{{url('/schools/'.$school->id.'/'.$class->id.'/application/save')}}" method="post" enctype="multipart/form-data">
     @method('post')
     @csrf
+    @if($errors->get('msg'))
+    <div class="relative z-0 w-full mb-5 group">
+        @foreach($errors->get('msg') as $error)
+            <h1 class="text-red-600 text-3xl">{{$error}}</h1>
+            Przejdz do twoich podań <a href="{{url('my_apps')}}">  kliknij tu</a>
+        @endforeach
+    </div>
+    @endif
     <div class="relative z-0 w-full mb-5 group">
         Aplikujesz do {{$school->name}}
     </div>

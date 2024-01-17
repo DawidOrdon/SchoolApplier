@@ -66,6 +66,10 @@ class ApplicationsController extends Controller
         $request->validate([
 
         ]);
+        if(count(Applications::all()->where('class_id','=',$class)->where('kid_id','=',$request->kid)))
+        {
+            return redirect()->back()->withErrors(['msg' => 'Dla tego dziecka zostało już stworzone podanie']);
+        }
         session_start();
         $pdfcontroller = new PDFController();
         if(isset($_SESSION['kid_id'])&&$_SESSION['kid_id']==$request->kid&&isset($_SESSION['class'])&&$_SESSION['class']==$class)
