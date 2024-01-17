@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ClassesSeeder::class);
         $this->call(SPSeeder::class);
         $this->call(KidsSeeder::class);
+        $this->call(AppStatusSeeder::class);
         $this->call(AppSeeder::class);
 
     }

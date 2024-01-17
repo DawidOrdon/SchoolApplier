@@ -77,6 +77,7 @@ class ApplicationsController extends Controller
             $app->exam_points=0;
             $app->certificate_points=0;
             $app->bonus_points=0;
+            $app->status_id=1;
             $app->priority=$request->choice;
             $app->language_id=$request->language;
             if(isset($request->info1)){

@@ -35,6 +35,11 @@ class UserController extends Controller
             'commune'=>'required|min:2|max:50',
             'county'=>'required|min:2|max:50',
             'voivodeship'=>'required|min:2|max:20',
+        ],[
+            "min" => "Pole :attribute jest mniejze niz :min",
+            "last_name.min" => "Pole :attribute jest spoko"
+        ],[
+            "first_name" => "imie"
         ]);
         $user=User::find(Auth::user()->id);
         $user->first_name=$request['first_name'];

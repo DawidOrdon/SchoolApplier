@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('kid_id')->references('id')->on('kids');
             $table->foreignId('class_id')->references('id')->on('classes');
+            $table->foreignId('status_id')->references('id')->on('app_statuses');
             $table->boolean('unlock');
             $table->integer('priority');
             $table->unsignedDecimal('exam_points');
