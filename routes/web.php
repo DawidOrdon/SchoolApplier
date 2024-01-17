@@ -62,6 +62,7 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::post('/schools/{school}/{class}/applications/{app}/add_info/save',[\App\Http\Controllers\ApplicationsController::class,'add_info_save']);
     Route::get('/schools/unlocker',[\App\Http\Controllers\ApplicationsController::class,'unlocker']);
     Route::post('/schools/unlock',[\App\Http\Controllers\ApplicationsController::class,'unlock']);
+    Route::get('/app/{app}/drop',[\App\Http\Controllers\AppStatusController::class,'drop_app']);
     Route::get('/y_school',function (){
         $school=\App\Models\schools::all()->where('user_id','=',Auth::user()->id);
         return redirect('schools/'.arr::first($school)->id.'/admin');

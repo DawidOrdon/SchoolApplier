@@ -42,7 +42,7 @@
                     {{$app->class_name}}
                 </td>
                 <td>
-                    Zgłoszono
+                    {{$app->status}}
                 </td>
                 <td>
                     <form action="{{url('my_apps/pdf')}}" method="post">

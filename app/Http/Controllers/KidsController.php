@@ -212,6 +212,7 @@ class KidsController extends Controller
                 $kid->certificate_photo2=$imageName;
                 $request->image2->move(public_path('images\certificate2'), $imageName);
                 $kid->save();
+                return redirect('user');
             }
             else{
                 return redirect('user');

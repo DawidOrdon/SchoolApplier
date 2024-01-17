@@ -30,10 +30,12 @@ class ApplicationsController extends Controller
                             ->join('users','users.id','=','kids.user_id')
                             ->join('classes','classes.id','=','applications.class_id')
                             ->join('schools','schools.id','=','classes.school_id')
+                            ->join('app_statuses','applications.status_id','=','app_statuses.id')
                             ->get(['users.id as user_id',
                                 'applications.id as id',
                                 'schools.name as school_name',
                                 'classes.name as class_name',
+                                'app_statuses.name as status',
                                 'kids.first_name as first_name','kids.last_name as last_name'])
                             ->where('user_id','=',Auth::user()->id);
 //        return ($apps);
@@ -74,9 +76,6 @@ class ApplicationsController extends Controller
             $app->kid_id=$request->kid;
             $app->class_id=$class;
             $app->unlock=0;
-            $app->exam_points=0;
-            $app->certificate_points=0;
-            $app->bonus_points=0;
             $app->status_id=1;
             $app->priority=$request->choice;
             $app->language_id=$request->language;
@@ -123,6 +122,7 @@ class ApplicationsController extends Controller
         $app = Applications::find($request->id);
         if(Hash::check($request->pass,$app->password)){
             $app->unlock=1;
+            $app->status_id=2;
             $app->save();
             return redirect()->back();
         }
@@ -136,7 +136,6 @@ class ApplicationsController extends Controller
                             ->get(['exam_photo','applications.id','kids.exam_pl','kids.exam_fl','kids.exam_mat','kids.first_name','kids.last_name'])
                             ->find($app);
 
-
 //        return $data;
         return view('applications.exam',['app'=>$data,
                                                 'school_id'=>$school,
@@ -144,31 +143,34 @@ class ApplicationsController extends Controller
                                                 'app_id'=>$app]);
     }
 
-    public function exam_save(Request $request, int $school, int $class, int $app)
+    public function exam_save(Request $request, int $school, int $class, int $app_id)
     {
         $request->validate([]);
         $points=0;
         $points += $request->pl*0.35;
         $points += $request->fl*0.30;
         $points += $request->mat*0.35;
-        $app = Applications::find($app);
+        $app = Applications::find($app_id);
         $app->exam_points=$points;
         $app->save();
 
+        AppStatusController::verify_point_status($app_id);
         return redirect('/schools/'.$school.'/'.$class.'/applications/');
     }
     public function certificate_check(int $school, int $class, int $app)
     {
-        //do zabezpieczenia
         $data = Applications::join('kids','kids.id','=','applications.kid_id')
                             ->join('classes','applications.class_id','=','classes.id')
                             ->get(['certificate_photo1','certificate_photo2','applications.id','kids.first_name','kids.last_name','classes.subject1','classes.subject2','kid_id'])
                             ->find($app);
 
-        $data->subjects=kid_subjects::join('subjects','subjects.id','=','kid_subjects.subject_id')
-            ->get(['subjects.name','kid_subjects.kid_id','subject_id','value'])
-            ->where('kid_id','=',$data->kid_id)
-            ->whereIn('subject_id',[1,2,$data->subject1,$data->subject2]);
+        $kidId=$data->kid_id;
+        $data->subjects= Subjects::leftJoin('kid_subjects', function ($join) use ($kidId) {
+            $join->on('subjects.id', '=', 'kid_subjects.subject_id')
+                ->where('kid_subjects.kid_id', '=', $kidId);
+        })
+            ->whereIn('subjects.id', [1, 2, $data->subject1, $data->subject2])
+            ->get(['subjects.name', 'subjects.id as subject_id', 'kid_subjects.value', 'kid_subjects.kid_id as kid_id']);
 
 
 
@@ -178,7 +180,7 @@ class ApplicationsController extends Controller
                                                 'app_id'=>$app]);
     }
 
-    public function certificate_save(Request $request, int $school, int $class, int $app)
+    public function certificate_save(Request $request, int $school, int $class, int $app_id)
     {
         $request->validate([]);
         $points=0;
@@ -206,10 +208,11 @@ class ApplicationsController extends Controller
                 }
             }
         }
-        $app = Applications::find($app);
+        $app = Applications::find($app_id);
         $app->certificate_points=$points;
         $app->save();
 
+        AppStatusController::verify_point_status($app_id);
         return redirect('/schools/'.$school.'/'.$class.'/applications/');
     }
     public function add_info_check(int $school, int $class, int $app)
@@ -226,7 +229,7 @@ class ApplicationsController extends Controller
                                                 'app_id'=>$app]);
     }
 
-    public function add_info_save(Request $request, int $school, int $class, int $app)
+    public function add_info_save(Request $request, int $school, int $class, int $app_id)
     {
         $request->validate([]);
         $points=0;
@@ -242,10 +245,11 @@ class ApplicationsController extends Controller
             $add_points=18;
         }
         $points+=$add_points;
-        $app = Applications::find($app);
+        $app = Applications::find($app_id);
         $app->bonus_points=$points;
         $app->save();
 
+        AppStatusController::verify_point_status($app_id);
         return redirect('/schools/'.$school.'/'.$class.'/applications/');
     }
     /**

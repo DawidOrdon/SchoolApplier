@@ -33,7 +33,7 @@
                 <td>
                     {{$application->certificate_points}}
                 </td>
-            @elseif(!is_null($application->certificate_photo))
+            @elseif(!is_null($application->certificate_photo1))
                 <td style="color:green">
                     <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/'.$application->id.'/certificate')}}">potwierdz</a>
                 </td>
@@ -55,6 +55,9 @@
                     <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/'.$application->id.'/add_info')}}">dodaj</a>
                 </td>
             @endif
+            <td>
+                <a href="{{url('/app/'.$application->id.'/drop')}}">odrzuć</a>
+            </td>
 
         </tr>
 

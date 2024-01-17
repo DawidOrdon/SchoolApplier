@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreignId('status_id')->references('id')->on('app_statuses');
             $table->boolean('unlock');
             $table->integer('priority');
-            $table->unsignedDecimal('exam_points');
-            $table->unsignedDecimal('certificate_points');
-            $table->unsignedDecimal('bonus_points');
+            $table->unsignedDecimal('exam_points')->nullable();
+            $table->unsignedDecimal('certificate_points')->nullable();
+            $table->unsignedDecimal('bonus_points')->nullable();
             $table->foreignId('language_id')->references('id')->on('languages');
             $table->boolean('info1');
             $table->boolean('info2');
