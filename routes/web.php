@@ -54,6 +54,7 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::post('/schools/{school}/edit/languages/store',[\App\Http\Controllers\SchoolLanguageController::class,'store'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
     Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
     Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show'])->middleware(\App\Http\Middleware\ClassOwner::class);
+    Route::get('/schools/{school}/{class}/applications/restore',[\App\Http\Controllers\ClassesController::class,'restore'])->middleware(\App\Http\Middleware\ClassOwner::class);
     Route::get('/schools/{school}/{class}/applications/{app}/exam',[\App\Http\Controllers\ApplicationsController::class,'exam_check']);
     Route::post('/schools/{school}/{class}/applications/{app}/exam/save',[\App\Http\Controllers\ApplicationsController::class,'exam_save']);
     Route::get('/schools/{school}/{class}/applications/{app}/certificate',[\App\Http\Controllers\ApplicationsController::class,'certificate_check']);
@@ -63,6 +64,7 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::get('/schools/unlocker',[\App\Http\Controllers\ApplicationsController::class,'unlocker']);
     Route::post('/schools/unlock',[\App\Http\Controllers\ApplicationsController::class,'unlock']);
     Route::get('/app/{app}/drop',[\App\Http\Controllers\AppStatusController::class,'drop_app']);
+    Route::get('/app/{app}/restore',[\App\Http\Controllers\AppStatusController::class,'restore_app']);
     Route::get('/y_school',function (){
         $school=\App\Models\schools::all()->where('user_id','=',Auth::user()->id);
         return redirect('schools/'.arr::first($school)->id.'/admin');

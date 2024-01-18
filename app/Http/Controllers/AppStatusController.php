@@ -30,6 +30,13 @@ class AppStatusController extends Controller
         $app->save();
         return redirect()->back();
     }
+    public function restore_app(int $app_id)
+    {
+        $app= Applications::find($app_id);
+        $app->status_id=3;
+        $app->save();
+        return redirect()->back();
+    }
     public function index()
     {
         //
