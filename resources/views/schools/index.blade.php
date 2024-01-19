@@ -6,29 +6,33 @@
     </button>
 </a>
 @endcan
+<div class="flex items-center justify-center w-full ">
+    <table>
 @foreach($schools as $school)
-    <div class="flex items-center justify-center w-full ">
-        <a href="{{route('schools.show',$school->id)}}">
-            <div class="w-4/5 grid grid-cols-4">
-                <div class="w-5/6 content-center justify-center">
-                    <img src="/images/schools/{{$school->img}}" alt="" width="80">
-                </div>
-                <div class="w-5/6 content-center justify-center">
-                    <h1>{{$school->name}}</h1>
-                </div>
-                <div class="w-5/6 content-center justify-center break-normal">
-                    {{$school->address}}<br />
-                    {{$school->city}}<br />
-                    {{$school->county}}<br />
-                    {{$school->voivodeship}}<br />
-                </div>
-                <div class="w-5/6 content-center justify-center">
-                    <h1>Profile</h1>
-                </div>
-            </div>
-        </a>
-    </div>
-@endforeach
 
+    <tr onclick="window.location='{{ route('schools.show', $school->id) }}';" style="cursor:pointer;">
+        <td>
+            <img src="/images/schools/{{$school->img}}" alt="" width="80">
+
+        </td>
+        <td>
+            <h1>{{$school->name}}</h1>
+        </td>
+        <td>
+            {{$school->address}}<br />
+            {{$school->city}}<br />
+            {{$school->county}}<br />
+            {{$school->voivodeship}}<br />
+        </td>
+        <td>
+            <h1>Opis</h1>
+            {{$school->desc}}
+        </td>
+
+    </tr>
+
+@endforeach
+    </table>
+</div>
 
 @include('.footer.main')

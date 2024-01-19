@@ -52,10 +52,18 @@
                     <a href="{{route('kids.edit',$kid->id)}}"><button class="btn">{{$kid->first_name}}</button></a><br />
                 </div>
                 <div>
-                    <a href="{{url('user/kids/'.$kid->id.'/exam')}}">Wyniki egzaminu</a>
+                    @if(is_null($kid->exam_photo))
+                        <a href="{{url('user/kids/'.$kid->id.'/exam')}}">Wyniki egzaminu</a>
+                    @else
+                        Wypełnione
+                    @endif
                 </div>
                 <div>
+                    @if(is_null($kid->certificate_photo))
                     <a href="{{url('user/kids/'.$kid->id.'/certificate')}}">Świadectwo</a>
+                    @else
+                        Wypełnione
+                    @endif
                 </div>
 
             @endforeach

@@ -1,4 +1,7 @@
 @include('.navbar.main')
+<div class="relative z-0 w-full mb-5 group">
+    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists/export_csv')}}">Generuj plik csv do e-edziennika</a>
+</div>
 <div class="flex items-center justify-center p3">
     Lista przyjętych osób
 </div>

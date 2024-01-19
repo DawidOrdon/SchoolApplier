@@ -55,6 +55,7 @@ Route::group(['middleware' => ['role:admin|school']], function () {
     Route::post('/schools/{school}/edit/languages/delete',[\App\Http\Controllers\SchoolLanguageController::class,'destroy'])->middleware(\App\Http\Middleware\SchoolOwner::class);;
     Route::get('/schools/{school}/{class}/applications',[\App\Http\Controllers\ClassesController::class,'show'])->middleware(\App\Http\Middleware\ClassOwner::class);
     Route::get('/schools/{school}/{class}/applications/lists',[\App\Http\Controllers\ClassesController::class,'generate_lists'])->middleware(\App\Http\Middleware\ClassOwner::class);
+    Route::get('/schools/{school}/{class}/applications/lists/export_csv',[\App\Http\Controllers\CsvExportController::class,'exportCsv'])->middleware(\App\Http\Middleware\ClassOwner::class);
     Route::get('/schools/{school}/{class}/applications/restore',[\App\Http\Controllers\ClassesController::class,'restore'])->middleware(\App\Http\Middleware\ClassOwner::class);
     Route::get('/schools/{school}/{class}/applications/{app}/exam',[\App\Http\Controllers\ApplicationsController::class,'exam_check']);
     Route::post('/schools/{school}/{class}/applications/{app}/exam/save',[\App\Http\Controllers\ApplicationsController::class,'exam_save']);

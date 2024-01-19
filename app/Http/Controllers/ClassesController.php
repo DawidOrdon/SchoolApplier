@@ -92,14 +92,29 @@ class ClassesController extends Controller
     }
     public function generate_lists(int $school_id,int $class_id)
     {
-        $application_accept=Applications::join('kids','kids.id','=','applications.kid_id')
-                                    ->get(['kids.first_name','kids.second_name', 'kids.last_name', 'kids.exam_photo','kids.certificate_photo1','kids.certificate_photo2',
-                                        'applications.id','applications.class_id','applications.exam_points','applications.certificate_points','applications.bonus_points','applications.unlock','applications.status_id',
-                                        'applications.exam_points + applications.certificate_points + applications.bonus_points as points'])
-                                    ->where('unlock','=',1)
-                                    ->where('status_id','!=',6)
-                                    ->where('class_id','=',$class_id)
-                                    ->orderBy('points');
+        $application_accept = Applications::join('kids', 'kids.id', '=', 'applications.kid_id')
+            ->select([
+                'kids.first_name',
+                'kids.second_name',
+                'kids.last_name',
+                'kids.exam_photo',
+                'kids.certificate_photo1',
+                'kids.certificate_photo2',
+                'applications.id',
+                'applications.class_id',
+                'applications.exam_points',
+                'applications.certificate_points',
+                'applications.bonus_points',
+                'applications.unlock',
+                'applications.status_id',
+            ])
+            ->selectRaw('applications.exam_points + applications.certificate_points + applications.bonus_points as points')
+            ->where('unlock', '=', 1)
+            ->where('status_id', '!=', 6)
+            ->where('class_id', '=', $class_id)
+            ->orderBy('points')
+            ->get();
+
         $application_rejected=Applications::join('kids','kids.id','=','applications.kid_id')
                                     ->get(['kids.first_name','kids.second_name', 'kids.last_name', 'kids.exam_photo','kids.certificate_photo1','kids.certificate_photo2',
                                         'applications.id','applications.class_id','applications.exam_points','applications.certificate_points','applications.bonus_points','applications.unlock','applications.status_id'])
