@@ -6,8 +6,8 @@
     </button>
 </a>
 @endcan
-<div class="flex items-center justify-center w-full ">
-    @foreach($schools as $school)
+@foreach($schools as $school)
+    <div class="flex items-center justify-center w-full ">
         <a href="{{route('schools.show',$school->id)}}">
             <div class="w-4/5 grid grid-cols-4">
                 <div class="w-5/6 content-center justify-center">
@@ -27,7 +27,8 @@
                 </div>
             </div>
         </a>
-    @endforeach
-</div>
+    </div>
+@endforeach
+
 
 @include('.footer.main')

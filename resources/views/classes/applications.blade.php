@@ -1,6 +1,7 @@
 @include('.navbar.main')
 <div class="relative z-0 w-full mb-5 group">
     <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/restore')}}">Przywracanie kandydata</a>
+    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists')}}">Wygeneruj listy</a>
 </div>
 
 <div class="relative z-0 w-full mb-5 group">
