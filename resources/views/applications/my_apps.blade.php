@@ -70,6 +70,13 @@
         @endforeach
     </table>
 </div>
+<div class="flex items-center justify-center ">
+    @if($errors->get('id'))
+        @foreach($errors->get('id') as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    @endif
+</div>
 
 
 

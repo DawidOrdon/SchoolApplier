@@ -25,12 +25,30 @@
                             <input type="checkbox" name="strip" value="7" id="strip">
                         </td>
                     </tr>
+                    @if($errors->get('strip'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('strip') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         <td><label for="vol">Wolontariat</label></td>
                         <td>
                             <input type="checkbox" name="vol" value="3" id="vol">
                         </td>
                     </tr>
+                    @if($errors->get('vol'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('vol') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
                     <tr>
                         <th colspan="2">Konkursy</th>
                     </tr>
@@ -56,6 +74,16 @@
                         </td>
                     </tr>
 
+                    @if($errors->get('add_1'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('add_1') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
+
 
 
                     <tr>
@@ -80,7 +108,15 @@
                         </td>
                     </tr>
 
-
+                    @if($errors->get('add_2'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('add_2') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
 
                     <tr>
                         <td colspan="2">uzyskanie w zawodach wiedzy będących konkursem o zasięgu wojewódzkim organizowanym przez kuratora oświaty:</td>
@@ -122,7 +158,15 @@
                         </td>
                     </tr>
 
-
+                    @if($errors->get('add_3'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('add_3') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
 
 
                     <tr>
@@ -166,7 +210,15 @@
                     </tr>
 
 
-
+                    @if($errors->get('add_4'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('add_4') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
 
 
                     <tr>
@@ -197,7 +249,15 @@
                         </td>
                     </tr>
 
-
+                    @if($errors->get('add_5'))
+                        <tr>
+                            <td colspan="2">
+                                @foreach($errors->get('add_5') as $error)
+                                    <li>{{$error}}</li>
+                                @endforeach
+                            </td>
+                        </tr>
+                    @endif
 
 
 

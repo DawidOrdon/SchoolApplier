@@ -52,7 +52,15 @@ class SchoolsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'school_name'=>'required',
+            'school_name'=>'required|min:2|max:13|alpha',
+            'email' => 'required|email',
+            'url' => 'required|url',
+            'phone'=>'required|numeric|digits:9',
+            'address'=>'min:2|max:100',
+            'city'=>'required|min:2|max:50',
+            'desc'=>'required|min:2|max:255',
+            'county'=>'required|min:2|max:50',
+            'voivodeship'=>'required|min:2|max:20',
             'image' => 'required',
             'admin'=>'required|exists:users,email'
         ]);

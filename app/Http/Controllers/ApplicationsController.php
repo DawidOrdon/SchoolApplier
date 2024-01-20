@@ -19,11 +19,11 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+
 class ApplicationsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
         $apps = Applications::join('kids','kids.id','=','applications.kid_id')
@@ -42,10 +42,6 @@ class ApplicationsController extends Controller
         return view('applications.my_apps',['apps'=>$apps]);
     }
 
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(int $school_id,int $class_id)
     {
         return view('applications.add',[
@@ -58,14 +54,24 @@ class ApplicationsController extends Controller
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request,int $school,int $class)
     {
         $request->validate([
+            'kid' => [
+                'required',
+                Rule::exists('kids', 'id')->where(function ($query) {
+                    $query->where('user_id', auth()->id());
+                }),
+            ],
+            'choice'=>'required',
+            'language' => [
+                'required',
+                Rule::exists('languages', 'id'),
+            ],
+            'add_info'=>'max:255'
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
 
-        ]);
         if(count(Applications::all()->where('class_id','=',$class)->where('kid_id','=',$request->kid)))
         {
             return redirect()->back()->withErrors(['msg' => 'Dla tego dziecka zostało już stworzone podanie']);
@@ -149,7 +155,14 @@ class ApplicationsController extends Controller
 
     public function exam_save(Request $request, int $school, int $class, int $app_id)
     {
-        $request->validate([]);
+        $request->validate([
+            'pl' =>'required|min:0|max:100|numeric',
+            'fl' =>'required|min:0|max:100|numeric',
+            'mat' =>'required|min:0|max:100|numeric',
+
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
+
         $points=0;
         $points += $request->pl*0.35;
         $points += $request->fl*0.30;
@@ -186,7 +199,10 @@ class ApplicationsController extends Controller
 
     public function certificate_save(Request $request, int $school, int $class, int $app_id)
     {
-        $request->validate([]);
+        $request->validate([
+            'rating.*'=> 'required|integer|between:1,6',
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
         $points=0;
         foreach ($request->rating as $rating){
             switch($rating){
@@ -235,7 +251,17 @@ class ApplicationsController extends Controller
 
     public function add_info_save(Request $request, int $school, int $class, int $app_id)
     {
-        $request->validate([]);
+        $request->validate([
+            'strip'=> 'integer|equals:7',
+            'vol'=> 'integer|equals:3',
+            'add_1'=> 'integer||between:5,10',
+            'add_2'=> 'integer||between:3,10',
+            'add_3'=> 'integer||between:3,10',
+            'add_4'=> 'integer||between:2,10',
+            'add_5'=> 'integer||between:1,4',
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
+
         $points=0;
         $points+=$request->strip;
         $points+=$request->vol;
@@ -256,42 +282,33 @@ class ApplicationsController extends Controller
         AppStatusController::verify_point_status($app_id);
         return redirect('/schools/'.$school.'/'.$class.'/applications/');
     }
-    /**
-     * Display the specified resource.
-     */
-    public function show(Applications $applications)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Applications $applications)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Applications $applications)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
-        $request->validate([]);
+        $request->validate([
+            'id' => [
+                'required',
+                Rule::exists('applications', 'id')->where(function ($query) {
+                    $query->join('kids','kids.id','=','applications.kid_id')->get('kids.user_id as user_id')->where('user_id', auth()->id());
+                }),
+            ],
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
+
         Applications::destroy($request->id);
         return redirect()->back();
     }
     public function new_pdf(Request $request)
     {
-        $request->validate([]);
+        $request->validate([
+            'id' => [
+                'required',
+                Rule::exists('applications', 'id')->where(function ($query) {
+                    $query->join('kids','kids.id','=','applications.kid_id')->get('kids.user_id as user_id')->where('user_id', auth()->id());
+                }),
+            ],
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
         $pdfcontroller = new PDFController();
         $randomString = Str::random(10);
         $hash=Hash::make($randomString);

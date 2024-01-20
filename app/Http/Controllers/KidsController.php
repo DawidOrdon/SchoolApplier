@@ -11,17 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class KidsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('kids.create',['parents'=>SecondParents::all()->where('user_id','=',Auth::user()->id)]);
@@ -33,8 +23,29 @@ class KidsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-
-        ]);
+            'first_name'=>'required|min:2|max:13|alpha',
+            'second_name'=>'required|min:2|max:13|alpha',
+            'last_name'=>'required|min:2|max:51|alpha',
+            'pesel' => [
+                'required',
+                'regex:/^[0-9]{11}$/',
+            ],
+            'birth_date'=>'required|date|before_or_equal:today|date_format:Y-m-d',
+            'school_number'=>'required|numeric',
+            'phone'=>'required|numeric|digits:9',
+            'zipcode'=>'min:5|max:6',
+            'post'=>'min:2|max:50',
+            'email' => 'required|email',
+            'address'=>'min:2|max:100',
+            'city'=>'min:2|max:50',
+            'school_city'=>'required|min:2|max:50',
+            'commune'=>'min:2|max:50',
+            'school_commune'=>'required|min:2|max:50',
+            'county'=>'min:2|max:50',
+            'voivodeship'=>'min:2|max:20',
+            'school_voivodeship'=>'required|min:2|max:20',
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
         $kid = new Kids();
         $user=Auth::user();
         $kid->user_id=$user->id;
@@ -110,8 +121,29 @@ class KidsController extends Controller
         if(isset($kid->user_id)){
             if($kid->user_id==Auth::user()->id){
                 $request->validate([
+                    'first_name'=>'required|min:2|max:13|alpha',
+                    'second_name'=>'required|min:2|max:13|alpha',
+                    'last_name'=>'required|min:2|max:51|alpha',
+                    'pesel' => [
+                        'required',
+                        'regex:/^[0-9]{11}$/',
+                    ],
+                    'birth_date'=>'required|date|before_or_equal:today|date_format:Y-m-d',
+                    'school_number'=>'required|numeric',
+                    'phone'=>'required|numeric|digits:9',
+                    'zipcode'=>'required|min:5|max:6',
+                    'post'=>'required|min:2|max:50',
+                    'address'=>'required|min:2|max:100',
+                    'city'=>'required|min:2|max:50',
+                    'school_city'=>'required|min:2|max:50',
+                    'commune'=>'required|min:2|max:50',
+                    'school_commune'=>'required|min:2|max:50',
+                    'county'=>'required|min:2|max:50',
+                    'voivodeship'=>'required|min:2|max:20',
+                    'school_voivodeship'=>'required|min:2|max:20',
+                ],ValidController::GetComment(),
+                    ValidController::GetAlias());
 
-                ]);
                 $kid = Kids::find($kid_id);
                 $user=Auth::user();
                 $kid->user_id=$user->id;
@@ -160,8 +192,11 @@ class KidsController extends Controller
         if(isset($kid->user_id)){
             if($kid->user_id==Auth::user()->id){
                 $request->validate([
-
-                ]);
+                    'exam_pl'=>'required|numeric|between:1,100',
+                    'exam_fl'=>'required|numeric|between:1,100',
+                    'exam_mat'=>'required|numeric|between:1,100',
+                ],ValidController::GetComment(),
+                    ValidController::GetAlias());
                 $kid->exam_pl=$request->pl;
                 $kid->exam_fl=$request->fl;
                 $kid->exam_mat=$request->mat;
@@ -193,8 +228,10 @@ class KidsController extends Controller
         if(isset($kid->user_id)){
             if($kid->user_id==Auth::user()->id){
                 $request->validate([
+                    'subjects.*'=>'required|integer|between:1,6',
+                ],ValidController::GetComment(),
+                    ValidController::GetAlias());
 
-                ]);
                 //return($request->subjects);
                 foreach($request->subjects as $key=>$subject){
                     $k_s = new kid_subjects();

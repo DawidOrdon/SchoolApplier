@@ -6,6 +6,7 @@ use App\Models\SchoolLanguage;
 use App\Models\schools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class SchoolLanguageController extends Controller
 {
@@ -82,6 +83,13 @@ class SchoolLanguageController extends Controller
      */
     public function destroy(int $school_id,Request $request)
     {
+        $request->validate([
+            'lang_id' => [
+                'required',
+                Rule::exists('languages', 'id')
+            ],
+        ],ValidController::GetComment(),
+            ValidController::GetAlias());
         $lang_id=$request->lang_id;
         $user=Auth::user();
         if(isset($user)) {

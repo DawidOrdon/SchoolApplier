@@ -35,6 +35,11 @@
         <label for="first_choice">Drugi wybór</label>
         <input type="radio" name="choice" value='2' id="first_choice">
     </div>
+    @if($errors->get('choice'))
+        @foreach($errors->get('choice') as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    @endif
     <div class="relative z-0 w-full mb-5 group">
         Jakiego języka chciałbyś się uczyć?
     </div>
@@ -46,6 +51,11 @@
             </div>
         @endforeach
     </div>
+    @if($errors->get('language'))
+        @foreach($errors->get('language') as $error)
+            <li>{{$error}}</li>
+        @endforeach
+    @endif
     <div class="relative z-0 w-full mb-5 group">
         DODATKOWE INFORMACJE O KANDYDACIE
     </div>
