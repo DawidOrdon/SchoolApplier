@@ -133,9 +133,57 @@ class SchoolsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, schools $schools)
+    public function update(Request $request, schools $schools,int $school_id)
     {
-        //
+        $request->validate([
+            'school_name'=>'required|min:2|max:250',
+            'email' => 'required|email',
+            'url' => 'required|url',
+            'phone'=>'required|numeric|digits:9',
+            'address'=>'min:2|max:100',
+            'city'=>'required|min:2|max:50',
+            'desc'=>'required|min:2|max:255',
+            'county'=>'required|min:2|max:50',
+            'voivodeship'=>'required|min:2|max:20',
+            'admin'=>'required|exists:users,email'
+        ]);
+        $school = schools::find($school_id);
+        $school->name=$request['school_name'];
+        $school->email=$request['email'];
+        $school->page=$request['url'];
+        $school->phone=$request['phone'];
+        $school->address=$request['address'];
+        $school->city=$request['city'];
+        $school->desc=$request['desc'];
+        $school->county=$request['county'];
+        $school->voivodeship=$request['voivodeship'];
+        if(isset($request->image)&&!empty($request->image)){
+            $imageName = time().'.'.$request->image->extension();
+            $school->img=$imageName;
+        }
+
+        $admin_cos=User::all()->where('email','=',$request['admin']);
+        foreach ($admin_cos as $admin){
+            $admin_id=$admin;
+        }
+        if(isset($admin))
+        {
+            $school->user_id=$admin->id;
+            $saved = $school->save();
+            if(!$saved){
+                App::abort(500, 'Error');
+            }
+            else if(isset($request->image)&&!empty($request->image))
+            {
+                $request->image->move(public_path('images\schools'), $imageName);
+                User::find($admin_id->id)->assignrole('school');
+            }
+            return redirect('/');
+        }
+        else{
+            return redirect('/');
+        }
+
     }
 
     /**

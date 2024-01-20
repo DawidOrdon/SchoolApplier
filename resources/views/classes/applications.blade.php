@@ -1,10 +1,18 @@
 @include('.navbar.main')
-<div class="relative z-0 w-full mb-5 group">
-    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/restore')}}">Przywracanie kandydata</a>
-    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists')}}">Wygeneruj listy</a>
+<div class="flex items-center justify-center p3">
+    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/restore')}}">
+        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Przywracanie kandydata
+        </button>
+    </a>
+    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists')}}">
+        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Wygeneruj listy
+        </button>
+    </a>
 </div>
 
-<div class="relative z-0 w-full mb-5 group">
+<div class="flex items-center justify-center p3">
     <table>
         <tr>
             <th>imie</th>
@@ -14,8 +22,8 @@
             <th>Dodatkowe</th>
             <th>Suma</th>
         </tr>
-    @foreach($applications as $application)
-        <tr>
+    @foreach($applications as $index=>$application)
+        <tr class="{{ $index % 2 === 1 ? 'bg-gray-200' : 'bg-white' }}">
             <td>
                 {{$application->first_name}}
             </td>

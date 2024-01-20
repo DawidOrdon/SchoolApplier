@@ -1,11 +1,18 @@
 @include('.navbar.main')
-<div class="relative z-0 w-full mb-5 group">
-    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists/export_csv')}}">Generuj plik csv do e-edziennika</a>
-</div>
 <div class="flex items-center justify-center p3">
+    <a href="{{url('/schools/'.$school_id.'/'.$class_id.'/applications/lists/export_csv')}}">
+        <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+            Generuj plik csv do e-edziennika
+        </button>
+    </a>
+</div>
+<div class="grid grid-cols-3">
+
+<div>
+<div class="flex items-center justify-center p3 p-3 text-2xl">
     Lista przyjętych osób
 </div>
-<div class="flex items-center justify-center p3">
+<div class="flex items-center justify-center p3 w-full p-3">
 
     <table>
         <tr>
@@ -24,10 +31,12 @@
             @if($count==$slots)
                 </table>
             </div>
-            <div class="flex items-center justify-center p3">
+</div>
+    <div>
+            <div class="flex items-center justify-center p3 p-3 text-2xl">
                 Lista nieprzyjętych osób
             </div>
-            <div class="flex items-center justify-center p3">
+            <div class="flex items-center justify-center p3 p-3">
 
                 <table>
                     <tr>
@@ -39,7 +48,9 @@
         @endforeach
     </table>
     </div>
-<div class="flex items-center justify-center p3">
+    </div>
+    <div>
+<div class="flex items-center justify-center p3 p-3 text-2xl">
     Lista niezakwalyfikowanych osób
 </div>
     <div class="flex items-center justify-center ">
@@ -60,5 +71,6 @@
         @endforeach
     </table>
 </div>
-
+</div>
+</div>
 @include('.footer.main')
