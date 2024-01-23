@@ -46,15 +46,15 @@ class ClassesController extends Controller
                         'slots' =>'required|min:0|max:255|numeric',
                         'school_type' => [
                             'required',
-                            Rule::exists('school_types', 'school_type'),
+                            Rule::exists('schools_types', 'id'),
                         ],
                         'subject1' => [
                             'required',
-                            Rule::exists('subjects', 'subject1'),
+                            Rule::exists('subjects', 'id'),
                         ],
                         'subject2' => [
                             'required',
-                            Rule::exists('subjects', 'subject2'),
+                            Rule::exists('subjects', 'id'),
                         ],
 
 
@@ -149,6 +149,73 @@ class ClassesController extends Controller
         return view('classes.applications_restore', ['applications' => $application,
             'school_id' => $school_id,
             'class_id' => $class_id]);
+
+    }
+
+    public function edit(int $school_id, int $class_id)
+    {
+        $user = Auth::user();
+        if (isset($user)) {
+            if ($user->hasPermissionTo('edit_school_data')) {
+                $school = schools::all()->where('user_id', '=', $user->id)->where('id', '=', $school_id);
+                if (count($school)) {
+                    return view('classes.edit', ['school_id' => $school_id,
+                                                        'class_id'=>$class_id,
+                                                        'schools_types' => Schools_types::all(),
+                                                        'subjects' => Subjects::all()->where('id', '!=', 1)->where('id', '!=', 2),
+                                                        'class_data'=>Classes::find($class_id)]);
+                } else {
+                    return redirect('/');
+                }
+            }
+            return redirect('/');
+        }
+        return redirect('/');
+    }
+    public function update(Request $request, int $school_id, int $class_id)
+    {
+        $user = Auth::user();
+        if (isset($user)) {
+            if ($user->hasPermissionTo('edit_school_data')) {
+                $school = schools::all()->where('user_id', '=', $user->id)->where('id', '=', $school_id);
+                if (count($school)) {
+                    $request->validate([
+                        'class_name' =>'required|min:0|max:255',
+                        'desc' =>'required|min:0|max:255',
+                        'slots' =>'required|min:0|max:255|numeric',
+                        'school_type' => [
+                            'required',
+                            Rule::exists('schools_types', 'id'),
+                        ],
+                        'subject1' => [
+                            'required',
+                            Rule::exists('subjects', 'id'),
+                        ],
+                        'subject2' => [
+                            'required',
+                            Rule::exists('subjects', 'id'),
+                        ],
+
+
+                    ],ValidController::GetComment(),
+                        ValidController::GetAlias());
+                    $new_class = Classes::find($class_id);
+                    $new_class->school_id = $school_id;
+                    $new_class->name = $request['class_name'];
+                    $new_class->desc = $request['desc'];
+                    $new_class->slots = $request['slots'];
+                    $new_class->school_type = $request['school_type'];
+                    $new_class->subject1 = $request['subject1'];
+                    $new_class->subject2 = $request['subject2'];
+                    $new_class->save();
+                    return redirect('/schools/' . $school_id . '/admin');
+                } else {
+                    return redirect('/');
+                }
+            }
+            return redirect('/');
+        }
+        return redirect('/');
 
     }
 

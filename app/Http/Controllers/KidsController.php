@@ -192,9 +192,10 @@ class KidsController extends Controller
         if(isset($kid->user_id)){
             if($kid->user_id==Auth::user()->id){
                 $request->validate([
-                    'exam_pl'=>'required|numeric|between:1,100',
-                    'exam_fl'=>'required|numeric|between:1,100',
-                    'exam_mat'=>'required|numeric|between:1,100',
+                    'pl'=>'required|numeric|between:1,100',
+                    'fl'=>'required|numeric|between:1,100',
+                    'mat'=>'required|numeric|between:1,100',
+                    'image'=>'required'
                 ],ValidController::GetComment(),
                     ValidController::GetAlias());
                 $kid->exam_pl=$request->pl;
@@ -229,6 +230,8 @@ class KidsController extends Controller
             if($kid->user_id==Auth::user()->id){
                 $request->validate([
                     'subjects.*'=>'required|integer|between:1,6',
+                    'image1'=>'required',
+                    'image2'=>'required'
                 ],ValidController::GetComment(),
                     ValidController::GetAlias());
 

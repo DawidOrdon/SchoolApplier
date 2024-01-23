@@ -9,7 +9,7 @@ use Illuminate\Support\Arr;
 
 class PDFController extends Controller
 {
-    public function createPDF(string $id, string $password)
+    static public function createPDF(string $id, string $password)
     {
         $data=Applications::join('kids','kids.id','=','applications.kid_id')
             ->join('users','users.id','=','kids.user_id')

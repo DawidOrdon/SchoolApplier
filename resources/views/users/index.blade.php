@@ -59,7 +59,7 @@
                     @endif
                 </div>
                 <div>
-                    @if(is_null($kid->certificate_photo))
+                    @if(is_null($kid->certificate_photo1))
                     <a href="{{url('user/kids/'.$kid->id.'/certificate')}}">Świadectwo</a>
                     @else
                         Wypełnione

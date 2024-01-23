@@ -18,6 +18,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -77,10 +78,10 @@ class ApplicationsController extends Controller
             return redirect()->back()->withErrors(['msg' => 'Dla tego dziecka zostało już stworzone podanie']);
         }
         session_start();
-        $pdfcontroller = new PDFController();
         if(isset($_SESSION['kid_id'])&&$_SESSION['kid_id']==$request->kid&&isset($_SESSION['class'])&&$_SESSION['class']==$class)
         {
-            $pdf=$pdfcontroller->createPDF($_SESSION['id'],$_SESSION['password']);
+
+            $pdf=PDFController::createPDF($_SESSION['id'],$_SESSION['password']);
         }else{
             $app= new Applications();
             $app->kid_id=$request->kid;
@@ -113,8 +114,7 @@ class ApplicationsController extends Controller
             $_SESSION['id']=$app->id;
             $_SESSION['kid_id']=$app->kid_id;
             $_SESSION['class']=$app->class_id;
-
-            $pdf=$pdfcontroller->createPDF($_SESSION['id'],$_SESSION['password']);
+            $pdf=PDFController::createPDF($_SESSION['id'],$_SESSION['password']);
         }
 
         return $pdf->stream();
@@ -136,6 +136,7 @@ class ApplicationsController extends Controller
             $app->save();
             return redirect()->back();
         }
+        Session::flash('unlock_success', 'Podanie zostało odblokowane.');
         return 'Błędne hasło';
     }
 
@@ -252,8 +253,8 @@ class ApplicationsController extends Controller
     public function add_info_save(Request $request, int $school, int $class, int $app_id)
     {
         $request->validate([
-            'strip'=> 'integer|equals:7',
-            'vol'=> 'integer|equals:3',
+            'strip'=> 'integer|in:7',
+            'vol'=> 'integer|in:3',
             'add_1'=> 'integer||between:5,10',
             'add_2'=> 'integer||between:3,10',
             'add_3'=> 'integer||between:3,10',
@@ -290,6 +291,9 @@ class ApplicationsController extends Controller
                 'required',
                 Rule::exists('applications', 'id')->where(function ($query) {
                     $query->join('kids','kids.id','=','applications.kid_id')->get('kids.user_id as user_id')->where('user_id', auth()->id());
+                    session_start();
+                    unset($_SESSION['kid_id']);
+                    unset($_SESSION['class']);
                 }),
             ],
         ],ValidController::GetComment(),

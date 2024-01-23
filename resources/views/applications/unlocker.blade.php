@@ -27,6 +27,13 @@
     <div class="grid md:grid-cols-1 md:gap-6">
         <button type="submit" class="text-black focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center border-2">Submit</button>
     </div>
+    <div class="grid md:grid-cols-1 md:gap-6">
+        @if (Session::has('unlock_success'))
+            <div class="alert alert-success">
+                {{ Session::get('unlock_success') }}
+            </div>
+        @endif
+    </div>
 </form>
 @include('.footer.main')
 

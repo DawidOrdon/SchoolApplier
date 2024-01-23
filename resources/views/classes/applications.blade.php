@@ -73,7 +73,11 @@
                 {{$application->bonus_points+$application->certificate_points+$application->exam_points}}
             </td>
             <td>
-                <a href="{{url('/app/'.$application->id.'/drop')}}" onclick="return confirm('Czy chcesz odrzucić podanie kandydata: {{$application->first_name}} {{$application->last_name}}')">odrzuć</a>
+                <a href="{{url('/app/'.$application->id.'/drop')}}" onclick="return confirm('Czy chcesz odrzucić podanie kandydata: {{$application->first_name}} {{$application->last_name}}')">
+                    <button class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-1 px-4 border border-gray-400 rounded shadow">
+                        odrzuć
+                    </button>
+                </a>
             </td>
 
         </tr>

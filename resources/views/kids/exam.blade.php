@@ -25,7 +25,7 @@
                 Język obcy
             </label>
             @if($errors->get('pl'))
-                @foreach($errors->get('pl') as $error)
+                @foreach($errors->get('fl') as $error)
                     <li>{{$error}}</li>
                 @endforeach
             @endif

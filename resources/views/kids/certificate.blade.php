@@ -12,18 +12,16 @@
                         <label for="{{$subject->id}}" class="block mb-2 text-sm font-medium">{{$subject->name}}</label>
                     </div>
                     <div class="col-span-2">
-                        <select id="{{$subject->id}}" name="subjects[{{$subject->id}}]" required class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                        <select id="{{$subject->id}}" name="subjects[{{$subject->id}}]"   class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                             <option value="">Wybierz ocene</option>
-                            <option value="6">6</option>
-                            <option value="5">5</option>
-                            <option value="4">4</option>
-                            <option value="3">3</option>
-                            <option value="2">2</option>
+                            @for($grade = 6; $grade >= 2; $grade--)
+                                <option value="{{$grade}}" @if(old("subjects.$subject->id") == $grade) selected @endif>{{$grade}}</option>
+                            @endfor
                         </select>
                     </div>
                     <div class="col-span-4">
-                        @if($errors->get($subject->id))
-                            @foreach($errors->get($subject->id) as $error)
+                        @if($errors->has("subjects.$subject->id"))
+                            @foreach($errors->get("subjects.$subject->id") as $error)
                                 <li>{{$error}}</li>
                             @endforeach
                         @endif
@@ -50,6 +48,11 @@
                             hover:file:bg-violet-100
                           " />
                 </label>
+                @if($errors->get('image1'))
+                    @foreach($errors->get('image1') as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                @endif
             </div>
         </div>
         <div class="relative z-0 w-full mb-5 group">
@@ -70,6 +73,11 @@
                             hover:file:bg-violet-100
                           " />
                 </label>
+                @if($errors->get('image2'))
+                    @foreach($errors->get('image2') as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                @endif
             </div>
         </div>
         <div class="grid md:grid-cols-1 md:gap-6">
