@@ -105,7 +105,8 @@ class SchoolsController extends Controller
     public function show(int $school_id)
     {
         return view('schools.details',['school_id'=>$school_id,
-                                            'classes'=>Classes::all()->where('school_id','=',$school_id)]);
+                                            'classes'=>Classes::all()->where('school_id','=',$school_id),
+                                            'school'=>Schools::find($school_id)]);
     }
 
     /**

@@ -9,7 +9,7 @@
     </div>
 @endcan
 <div class="flex items-center justify-center w-full ">
-    <table>
+    <table class="w-1/3">
     <tr><td colspan="4" class="text-2xl text-center p-3">Wybierz szkołę</td></tr>
 @foreach($schools as $school)
 
@@ -27,7 +27,7 @@
             {{$school->county}}<br />
             {{$school->voivodeship}}<br />
         </td>
-        <td class="p-4">
+        <td class="p-3 w-1/3">
             <h1>Opis</h1>
             {{$school->desc}}
         </td>
