@@ -3,6 +3,9 @@
 <div class="flex items-center justify-center w-full text-2xl p-4">
             Rejestracja
 </div>
+<div class="flex items-center justify-center w-full  p-4">
+    <x-validation-errors class="mb-4" />
+</div>
 <div class="flex items-center justify-center w-full ">
 
 
