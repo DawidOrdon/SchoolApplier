@@ -126,18 +126,24 @@ class ApplicationsController extends Controller
     }
     public function unlock(Request $request)
     {
+        session_start();
         $request->validate([
             'id'=>'exists:applications'
-        ]);
+        ],['exists'=>'podanie nie istnieje']);
         $app = Applications::find($request->id);
+        if($app->unlock==1){
+            Session::flash('unlock_success', 'podanie zostało już odblokowane');
+            return redirect()->back();
+        }
         if(Hash::check($request->pass,$app->password)){
             $app->unlock=1;
             $app->status_id=2;
             $app->save();
+            Session::flash('unlock_success', 'podanie zostało odblokowane');
             return redirect()->back();
         }
-        Session::flash('unlock_success', 'Podanie zostało odblokowane.');
-        return 'Błędne hasło';
+        Session::flash('unlock_success', 'Podano błędne hasło');
+        return redirect()->back();
     }
 
     public function exam_check(int $school, int $class, int $app)
