@@ -53,6 +53,7 @@
             width: 2000px;
         }
         .codes{
+            margin-top: 100px;
             float:left;
             width: 50%;
         }
@@ -175,13 +176,11 @@
                 @endif
             </td>
         </tr>
-    </table>
-    <table style="margin-top: 50px">
         <tr>
             <td style="width: 40%;">Informacje o stanie zdrowia kandydata <br />(np. choroby przewlekłe, cukrzyca, epilepsja, aleregia i inne)</td><td>{{$com}}</td>
         </tr>
     </table>
-    <div class="codes">
+    <div class="codes" >
         {!! DNS1D::getBarcodeHTML($id, 'C39',4,60); !!}
         id:{{$id}}
     </div>
