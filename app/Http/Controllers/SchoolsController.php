@@ -139,7 +139,7 @@ class SchoolsController extends Controller
         $request->validate([
             'school_name'=>'required|min:2|max:250',
             'email' => 'required|email',
-            'url' => 'required|url',
+            'url' => 'required|',
             'phone'=>'required|numeric|digits:9',
             'address'=>'min:2|max:100',
             'city'=>'required|min:2|max:50',
