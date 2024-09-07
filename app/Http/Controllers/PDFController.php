@@ -24,18 +24,22 @@ class PDFController extends Controller
                 'languages.name as lang_name',
                 'schools_types.name as schooltype',
 
-                'kids.pesel as pesel','kids.first_name as firstname','kids.second_name as secondname','kids.last_name as lastname','kids.birth_date as birthdate',
-                'kids.address as street','kids.city as city', 'kids.zipcode as zipcode','kids.post as post','kids.commune as commune','kids.county as county','kids.voivodeship as voivodeship',
-                'kids.email as email', 'kids.phone_number as phone','kids.school_number as schoolnumber','kids.school_commune as schoolcommune','kids.school_voivodeship as schoolvoivodeship',
-                'kids.s_parent',
+                'kids.pesel as pesel','kids.first_name as firstname','kids.second_name as secondname',
+                'kids.last_name as lastname','kids.birth_date as birthdate','kids.address as street',
+                'kids.city as city', 'kids.zipcode as zipcode','kids.post as post','kids.commune as commune',
+                'kids.county as county','kids.voivodeship as voivodeship','kids.email as email',
+                'kids.phone_number as phone','kids.school_number as schoolnumber',
+                'kids.school_commune as schoolcommune','kids.school_voivodeship as schoolvoivodeship','kids.s_parent',
 
-                'second_parents.first_name as sp_first_name','second_parents.last_name as sp_last_name','second_parents.phone_number as sp_phone','second_parents.email as sp_email',
-                'second_parents.address as sp_street','second_parents.post as sp_post','second_parents.city as sp_city','second_parents.commune as sp_commune',
+                'second_parents.first_name as sp_first_name','second_parents.last_name as sp_last_name',
+                'second_parents.phone_number as sp_phone','second_parents.email as sp_email',
+                'second_parents.address as sp_street','second_parents.post as sp_post','second_parents.city as sp_city',
+                'second_parents.commune as sp_commune',
                 'second_parents.county as sp_county','second_parents.voivodeship as sp_voivodeship',
 
-                'users.first_name as fp_first_name','users.last_name as fp_last_name','users.phone_number as fp_phone','users.email as fp_email',
-                'users.address as fp_street','users.post as fp_post','users.city as fp_city','users.commune as fp_commune',
-                'users.county as fp_county','users.voivodeship as fp_voivodeship'
+                'users.first_name as fp_first_name','users.last_name as fp_last_name','users.phone_number as fp_phone',
+                'users.email as fp_email','users.address as fp_street','users.post as fp_post','users.city as fp_city',
+                'users.commune as fp_commune','users.county as fp_county','users.voivodeship as fp_voivodeship'
 
 
             ])
